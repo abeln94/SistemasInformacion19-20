@@ -1,56 +1,49 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
-
 <head>
-    <meta charset="utf-8">
-    <title>{% block title %}EcoRutas{% endblock %}</title>
+    <title>EcoRutas: {% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="EcoRutas"/>
+    <meta name="keywords"
+          content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,calculadora de rutas"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static " images
+    /icono.ico" %}">
+    <link href="{% static " styles
+    /main.css" %}" rel='stylesheet' type='text/css'>
 </head>
 <body>
-
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EcoRutas</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact' %}">Link</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                {% if user.is_authenticated %}
-                Hola {{ user.username }}!
-                <a href="{% url 'logout' %}" class="">Logout</a>
-                {% else %}
-                <a href="{% url 'login' %}" class="">Login</a>
-                {% endif %}
-            </li>
+<!-- Cabecera de la página -->
+<header>
+    <div>
+        <ul>
+            <li><a href="{% url 'login' %}">Entrar</a></li>
+            <li><a href="{% url 'logup' %}">Registrarse</a></li>
         </ul>
     </div>
-</nav>
+    <img class="titulo" src="{% static " images/EcoRutas.png" %}" alt="Logo de EcoRutas">
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Página principal</a></li>
+            <li><a href="{% url 'mapa' %}">Calculadora de rutas</a></li>
+        </ul>
+    </nav>
+</header>
 
+<!-- Parte principal -->
+{% block content %}
+{% endblock %}
 
-<main>
+<!-- Pie de página -->
+<footer>
+    <ul>
+        <li><a href="https://www.zaragoza.es/sedeelectronica/"><img src="{% static " images/ayuntamiento.png" %}"
+            alt="Ayuntamiento de Zaragoza"></a></li>
+        <li><a href="{% url 'contacto' %}">Formulario de contacto</a></li>
+    </ul>
+</footer>
 
-    <div class="container vertical-center">
-        <div class="col-md-6 col-md-offset-3">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
-</main>
 </body>
 </html>

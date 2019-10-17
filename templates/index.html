@@ -1,38 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> EcoRutas: Página principal </title>
-    <meta charset="UTF-8">
-    <meta name="description" content="EcoRutas"/>
-    <meta name="keywords"
-          content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,calculadora de rutas"/>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="estilos/images/icono.ico">
-    <link href='estilos/main.css' rel='stylesheet' type='text/css'>
-</head>
-<body>
-<!-- Cabecera de la página -->
-<header>
-    <div>
-        <ul>
-            <li><a href="login.html">Entrar</a></li>
-            <li><a href="logup.html">Registrarse</a></li>
-        </ul>
-    </div>
-    <img class="titulo" src="estilos/images/EcoRutas.png" alt="Logo de EcoRutas">
-    <nav>
-        <ul>
-            <li><a href="index.html">Página principal</a></li>
-            <li><a href="mapa.html">Calculadora de rutas</a></li>
-        </ul>
-    </nav>
-</header>
+{% extends 'base.html' %}
+{% load static %}
 
-<!-- Parte principal -->
+{% block title %}Página principal{% endblock %}
+
+{% block content %}
+
 <section>
     <article>
-        <img src="estilos/images/noticias/plantarArbol.jpg" alt="Imagen de campaña de plantación de árboles 2018">
+        <img src="{% static " images/noticias/plantarArbol.jpg" %}" alt="Imagen de campaña de plantación de árboles
+        2018">
         <h2> Campaña por la preservación de la naturaleza </h2>
         <p>
             Este año nos proponemos en el ayuntamiento de Zaragoza colabolar con la preservación de la naturaleza en la
@@ -46,7 +22,7 @@
         </p>
     </article>
     <article>
-        <img src="estilos/images/noticias/contaminacion.jpg"
+        <img src="{% static " images/noticias/contaminacion.jpg" %}"
              alt="Imagen de concienciación para reducir contaminación en las ciudades">
         <h2> Zaragoza, objetivo 0 contaminación </h2>
         <p>
@@ -62,7 +38,7 @@
 
     </article>
     <article>
-        <img src="estilos/images/noticias/coche.jpeg"
+        <img src="{% static " images/noticias/coche.jpeg" %}"
              alt="Imagen de un coche en la que se cuestiona las emisiones contaminantes que emite">
         <h2> ¿Cuánto contamina mi coche? </h2>
         <p>
@@ -78,13 +54,5 @@
         </p>
     </article>
 </section>
-<!-- Pie de página -->
-<footer>
-    <ul>
-        <li><a href="https://www.zaragoza.es/sedeelectronica/"><img src="estilos/images/ayuntamiento.png"
-                                                                    alt="Ayuntamiento de Zaragoza"></a></li>
-        <li><a href="contacto.html">Formulario de contacto</a></li>
-    </ul>
-</footer>
-</body>
-</html>
+
+{% endblock %}

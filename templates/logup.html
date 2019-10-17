@@ -1,36 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> EcoRutas: Registrarse </title>
-    <meta charset="UTF-8">
-    <meta name="description" content="EcoRutas"/>
-    <meta name="keywords"
-          content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,registrarse,crear cuenta,crear usuario"/>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="estilos/images/icono.ico">
-    <link href='estilos/main.css' rel='stylesheet' type='text/css'>
-</head>
-<body>
-<!-- Cabecera de la página -->
-<header>
-    <div>
-        <ul>
-            <li><a href="login.html">Entrar</a></li>
-            <li><a href="logup.html">Registrarse</a></li>
-        </ul>
-    </div>
-    <img class="titulo" src="estilos/images/EcoRutas.png" alt="Logo de EcoRutas">
-    <nav>
-        <ul>
-            <li><a href="index.html">Página principal</a></li>
-            <li><a href="mapa.html">Calculadora de rutas</a></li>
-        </ul>
-    </nav>
-</header>
+{% extends 'base.html' %}
 
-<!-- Parte principal -->
-<form method="post" action="index.html" class="contenedor_log">
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'index' %}" class="contenedor_log">
     <h1>Registro</h1>
     <input type="email" id="email" name="email" placeholder="Email de contacto" class="box">
     <input type="name" id="usuario" name="usuario" placeholder="Nombre de ususario" class="box">
@@ -38,5 +12,5 @@
     <input type="password" id="repassword" placeholder="Reescribir contraseña" class="box">
     <button type="submit"> Registrarse</button>
 </form>
-</body>
-</html>
+
+{% endblock %}
