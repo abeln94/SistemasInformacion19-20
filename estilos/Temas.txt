@@ -1,0 +1,5 @@
+Diseño responsive
+Diseño accesible
+
+MEJORAS
+Panel dinámico en index con noticias más destacadas cuando crezcan en cantidad
