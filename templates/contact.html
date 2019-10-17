@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contáctanos</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Contáctanos{% endblock %}
+
+{% block content %}
 
 <h2>Formulario de contacto:</h2>
 
@@ -13,9 +11,8 @@
     <input type="submit" value="Enviar">
 </form>
 
-%if sent is True:
-<div>Sent!</div>
-%end
+<!--%if sent is True:-->
+<!--<div>Sent!</div>-->
+<!--%end-->
 
-</body>
-</html>
+{% endblock %}
