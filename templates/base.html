@@ -11,8 +11,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{% static " images
     /icono.ico" %}">
-    <link href="{% static " styles
-    /main.css" %}" rel='stylesheet' type='text/css'>
+    <link href="{% static 'styles/main.css' %}" rel='stylesheet' type='text/css'>
 </head>
 <body>
 <!-- Cabecera de la página -->
@@ -23,7 +22,7 @@
             <li><a href="{% url 'logup' %}">Registrarse</a></li>
         </ul>
     </div>
-    <img class="titulo" src="{% static " images/EcoRutas.png" %}" alt="Logo de EcoRutas">
+    <img class="titulo" src="{% static 'images/EcoRutas.png' %}" alt="Logo de EcoRutas">
     <nav>
         <ul>
             <li><a href="{% url 'index' %}">Página principal</a></li>
@@ -39,8 +38,8 @@
 <!-- Pie de página -->
 <footer>
     <ul>
-        <li><a href="https://www.zaragoza.es/sedeelectronica/"><img src="{% static " images/ayuntamiento.png" %}"
-            alt="Ayuntamiento de Zaragoza"></a></li>
+        <li><a href="https://www.zaragoza.es/sedeelectronica/"><img src="{% static 'images/ayuntamiento.png' %}"
+                                                                    alt="Ayuntamiento de Zaragoza"></a></li>
         <li><a href="{% url 'contacto' %}">Formulario de contacto</a></li>
     </ul>
 </footer>
