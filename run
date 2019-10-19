@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+# check if virtualenv is installed
+if [ ! -d venv ]; then
+	echo Virtualenv is not installed, installing...
+	
+	virtualenv -p python3 venv
+	
+	echo ...done
+	
+	echo Installing Django...
+	
+	source ./venv/bin/activate
+	pip install django
+	deactivate
+	
+	echo ...done
+fi
+
+echo Launching server...
+
+source ./venv/bin/activate
+python manage.py runserver
+deactivate
+
+echo ...exit
+
+# check virtualenv
+# if [ ! ${VIRTUAL_ENV} ]; then
+#     echo Entering virtualenv...
+# fi

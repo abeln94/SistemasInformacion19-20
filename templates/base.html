@@ -17,14 +17,21 @@
 <header>
     <div>
         <ul>
+            {% if user.is_authenticated %}
+            <li>
+                <p>Hola {{ user.username }}.</p>
+                <a href="{% url 'logout' %}">Desconectar</a>
+            </li>
+            {% else %}
             <li><a href="{% url 'login' %}">Entrar</a></li>
+            {% endif %}
             <li><a href="{% url 'logup' %}">Registrarse</a></li>
         </ul>
     </div>
     <img class="titulo" src="{% static 'images/EcoRutas.png' %}" alt="Logo de EcoRutas">
     <nav>
         <ul>
-            <li><a href="{% url 'index' %}">Página principal</a></li>
+            <li><a href="{% url 'home' %}">Página principal</a></li>
             <li><a href="{% url 'mapa' %}">Calculadora de rutas</a></li>
         </ul>
     </nav>
