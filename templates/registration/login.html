@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'login' %}" class="contenedor_log">
+    {% csrf_token %}
+    <h1>Entrar</h1>
+
+    <input type="text" id="username" name="{{ form.username.name }}" placeholder="Nombre de usuario" class="box">
+
+    <input type="password" id="password" name="{{ form.password.name }}" placeholder="Contraseña" class="box">
+
+    <button type="submit"> Login</button>
+    <input type="hidden" name="next" value="{{ next }}"/>
+
+    <p><u style="color:#f1c40f;"><a href="{% url 'password_reset' %}"> ¿Ha olvidado su contraseña? </a></u></p>
+
+    {% if form.errors %}
+    <p>Usuario y contraseña no coinciden.</p>
+    {% endif %}
+
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Usuario sin permisos</p>
+    {% else %}
+    <p>Necesario registrarse</p>
+    {% endif %}
+    {% endif %}
+
+</form>
+
+{% endblock %}
