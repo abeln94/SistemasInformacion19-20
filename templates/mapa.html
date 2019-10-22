@@ -23,6 +23,16 @@
             <input type="text" id="localizacionD" name="localizacionD" placeholder="Localización" class="box">
         </div>
 
+        <div>
+            <h1>Tipo de coche</h1>
+            <select>
+                <option value="A" {% if user.carType == "A" %} selected="selected" {% endif %}>Tipo A</option>
+                <option value="B" {% if user.carType == "B" %} selected="selected" {% endif %}>Tipo B</option>
+                <option value="C" {% if user.carType == "C" %} selected="selected" {% endif %}>Tipo C</option>
+                <option value="D" {% if user.carType == "D" %} selected="selected" {% endif %}>Tipo D</option>
+            </select>
+        </div>
+
         <button type="submit"> Calcular</button>
     </form>
 </section>

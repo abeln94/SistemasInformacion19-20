@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processor.context_processor'
             ],
         },
     },
@@ -97,6 +99,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+AUTH_USER_MODEL = 'core.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
