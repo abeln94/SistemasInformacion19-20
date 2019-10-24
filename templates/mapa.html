@@ -7,7 +7,8 @@
 
 <section id="calculadora">
     <img id="mapa" src="{% static 'images/mapa.png' %}" alt="Mapa de Zaragoza">
-    <form class="contenedor_log">
+    <form method="post" action="#" class="contenedor_log">
+        {% csrf_token %}
         <div>
             <h1>Origen</h1>
 
@@ -25,11 +26,10 @@
 
         <div>
             <h1>Tipo de coche</h1>
-            <select>
-                <option value="A" {% if user.carType == "A" %} selected="selected" {% endif %}>Tipo A</option>
-                <option value="B" {% if user.carType == "B" %} selected="selected" {% endif %}>Tipo B</option>
-                <option value="C" {% if user.carType == "C" %} selected="selected" {% endif %}>Tipo C</option>
-                <option value="D" {% if user.carType == "D" %} selected="selected" {% endif %}>Tipo D</option>
+            <select id="carType" name="carType">
+                {% for carType in carTypes %}
+                    <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.display }}</option>
+                {% endfor %}
             </select>
         </div>
 

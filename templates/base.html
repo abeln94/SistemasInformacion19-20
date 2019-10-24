@@ -19,10 +19,8 @@
         <ul>
             <li><a href="{% url 'logup' %}">Registrarse</a></li>
             {% if user.is_authenticated %}
-            <li>
-                <p>{{ user_label }}</p>
-                <a href="{% url 'logout' %}">Desconectar</a>
-            </li>
+            <li><a href="{% url 'viajes' %}">{{ user_label }}</a></li>
+            <li><a href="{% url 'logout' %}">Desconectar</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">Entrar</a></li>
             {% endif %}

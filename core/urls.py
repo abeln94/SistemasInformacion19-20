@@ -24,7 +24,8 @@ urlpatterns = [
     path('baja', TemplateView.as_view(template_name='baja.html'), name='baja'),
     path('contacto', TemplateView.as_view(template_name='contacto.html'), name='contacto'),
     path('logup', TemplateView.as_view(template_name='logup.html'), name='logup'),
-    path('mapa', TemplateView.as_view(template_name='mapa.html'), name='mapa'),
+    path('mapa', views.mapa, name='mapa'),
+    path('viajes', views.viajes, name='viajes'),
 
     path('debug', views.debug),
 ]

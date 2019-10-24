@@ -4,9 +4,13 @@ from django.db import models
 
 # Create your models here.
 
+class CarTypes(models.Model):
+    display = models.CharField(max_length=8)
+
 
 class User(AbstractUser):
-    carType = models.CharField(max_length=30, blank=True)
+    carType = models.ForeignKey(CarTypes, on_delete=models.SET_NULL, null=True)
+    points = models.IntegerField(default=0)
 
 
 class Viajes(models.Model):

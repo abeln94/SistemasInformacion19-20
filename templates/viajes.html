@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Viajes{% endblock %}
+
+{% block content %}
+<section class="contenedor_log">
+
+{% if user.is_authenticated %}
+    <ul>
+    {% for viaje in viajes %}
+        <li>De {{ viaje.start }} a {{ viaje.end }}, ganaste {{ viaje.points }} puntos.</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <h2>Necesario registrarse.</h2>
+{% endif %}
+
+</section>
+{% endblock %}

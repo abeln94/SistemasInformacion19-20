@@ -18,14 +18,14 @@
     <p><u style="color:#f1c40f;"><a href="{% url 'password_reset' %}"> ¿Ha olvidado su contraseña? </a></u></p>
 
     {% if form.errors %}
-    <p>Usuario y contraseña no coinciden.</p>
+    <h2>Usuario y contraseña no coinciden.</h2>
     {% endif %}
 
     {% if next %}
     {% if user.is_authenticated %}
-    <p>Usuario sin permisos</p>
+    <h2>Usuario sin permisos</h2>
     {% else %}
-    <p>Necesario registrarse</p>
+    <h2>Necesario registrarse</h2>
     {% endif %}
     {% endif %}
 

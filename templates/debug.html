@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Debug{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<form method="post" action="#" class="contenedor_log">
+    {% csrf_token %} <input type="hidden" name="type" value="addViaje">
+    <h1>Añadir viaje</h1>
+
+    <input type="text" name="start" placeholder="Inicio" class="box">
+    <input type="text" name="end" placeholder="Fin" class="box">
+    <input type="number" name="points" placeholder="Puntos" class="box">
+
+    <button type="submit">Añadir viaje al usuario</button>
+
+</form>
+{% else %}
+<p>Necesario registrarse</p>
+{% endif %}
+
+<form method="post" action="#" class="contenedor_log">
+    {% csrf_token %} <input type="hidden" name="type" value="addCarType">
+    <h1>Añadir tipo de coche</h1>
+
+    <input type="text" name="carType" placeholder="Tipo de coche" class="box">
+
+    <button type="submit">Añadir tipo de coche</button>
+
+</form>
+
+{% endblock %}
