@@ -7,6 +7,6 @@ def context_processor(request):
 def getUserLabel(user):
     return "Hola {}, tienes {} puntos.".format(
         user.username,
-        user.points, #Viajes.objects.filter(user=user).aggregate(points=Sum('points'))['points']
+        user.points, #Trip.objects.filter(user=user).aggregate(points=Sum('points'))['points']
     ) if user.is_authenticated else ''
 

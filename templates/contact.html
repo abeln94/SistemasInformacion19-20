@@ -5,6 +5,8 @@
 {% block content %}
 
 <form method="post" action="{% url 'home' %}" class="contenedor_log">
+    {% csrf_token %}
+
     <h1>Contacto con desarrolladores</h1>
     <input type="email" id="email" name="email" placeholder="Email de contacto" class="box">
     <textarea id="text" class="box" placeholder="Tus opiniones son importantes y nos ayudan a mejorar"></textarea>

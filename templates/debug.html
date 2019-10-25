@@ -5,25 +5,31 @@
 {% block content %}
 {% if user.is_authenticated %}
 <form method="post" action="#" class="contenedor_log">
-    {% csrf_token %} <input type="hidden" name="type" value="addViaje">
-    <h1>Añadir viaje</h1>
+    {% csrf_token %}
+    <input type="hidden" name="type" value="addTrip">
 
+    <h1>Añadir trip</h1>
+
+    <input type="date" name="date" placeholder="Fecha" class="box">
     <input type="text" name="start" placeholder="Inicio" class="box">
     <input type="text" name="end" placeholder="Fin" class="box">
     <input type="number" name="points" placeholder="Puntos" class="box">
 
-    <button type="submit">Añadir viaje al usuario</button>
+    <button type="submit">Añadir trip al usuario</button>
 
 </form>
 {% else %}
-<p>Necesario registrarse</p>
+<h2>Necesario registrarse</h2>
 {% endif %}
 
 <form method="post" action="#" class="contenedor_log">
-    {% csrf_token %} <input type="hidden" name="type" value="addCarType">
+    {% csrf_token %}
+    <input type="hidden" name="type" value="addCarType">
+
     <h1>Añadir tipo de coche</h1>
 
-    <input type="text" name="carType" placeholder="Tipo de coche" class="box">
+    <input type="text" name="model" placeholder="Tipo de coche" class="box">
+    <input type="number" name="contaminationRate" placeholder="Tasa de contamincación" class="box">
 
     <button type="submit">Añadir tipo de coche</button>
 

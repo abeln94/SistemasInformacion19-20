@@ -4,17 +4,22 @@ from django.db import models
 
 # Create your models here.
 
-class CarTypes(models.Model):
-    display = models.CharField(max_length=8)
+class CarType(models.Model):
+    model = models.CharField(max_length=30)
+    contaminationRate = models.FloatField(default=1)
 
 
 class User(AbstractUser):
-    carType = models.ForeignKey(CarTypes, on_delete=models.SET_NULL, null=True)
+    cardId = models.CharField(max_length=8)
     points = models.IntegerField(default=0)
 
+    carType = models.ForeignKey(CarType, on_delete=models.SET_NULL, null=True)
 
-class Viajes(models.Model):
-    start = models.CharField(max_length=8)
-    end = models.CharField(max_length=8)
+
+class Trip(models.Model):
+    date = models.DateTimeField()
+    start = models.CharField(max_length=50)
+    end = models.CharField(max_length=50)
     points = models.IntegerField(default=0)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)

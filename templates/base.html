@@ -19,7 +19,7 @@
         <ul>
             <li><a href="{% url 'logup' %}">Registrarse</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'viajes' %}">{{ user_label }}</a></li>
+            <li><a href="{% url 'trips' %}">{{ user_label }}</a></li>
             <li><a href="{% url 'logout' %}">Desconectar</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">Entrar</a></li>
@@ -30,7 +30,7 @@
     <nav>
         <ul>
             <li><a href="{% url 'home' %}">Página principal</a></li>
-            <li><a href="{% url 'mapa' %}">Calculadora de rutas</a></li>
+            <li><a href="{% url 'map' %}">Calculadora de rutas</a></li>
         </ul>
     </nav>
 </header>
@@ -45,7 +45,7 @@
         <li><a href="https://www.zaragoza.es/sedeelectronica/">
             <img src="{% static 'images/ayuntamiento.png' %}" alt="Ayuntamiento de Zaragoza">
         </a></li>
-        <li><a href="{% url 'contacto' %}">Formulario de contacto</a></li>
+        <li><a href="{% url 'contact' %}">Formulario de contacto</a></li>
     </ul>
 </footer>
 

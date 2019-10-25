@@ -3,17 +3,17 @@
 {% block title %}Viajes{% endblock %}
 
 {% block content %}
-<section class="contenedor_log">
+<section><article>
 
 {% if user.is_authenticated %}
     <ul>
-    {% for viaje in viajes %}
-        <li>De {{ viaje.start }} a {{ viaje.end }}, ganaste {{ viaje.points }} puntos.</li>
+    {% for trip in trips %}
+        <li>El {{ trip.date }} viajaste de {{ trip.start }} a {{ trip.end }} y ganaste {{ trip.points }} puntos.</li>
     {% endfor %}
     </ul>
 {% else %}
     <h2>Necesario registrarse.</h2>
 {% endif %}
 
-</section>
+</article></section>
 {% endblock %}

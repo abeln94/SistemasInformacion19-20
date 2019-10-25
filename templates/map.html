@@ -28,7 +28,7 @@
             <h1>Tipo de coche</h1>
             <select id="carType" name="carType">
                 {% for carType in carTypes %}
-                    <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.display }}</option>
+                    <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.model }} (contaminación: {{ carType.contaminationRate }})</option>
                 {% endfor %}
             </select>
         </div>

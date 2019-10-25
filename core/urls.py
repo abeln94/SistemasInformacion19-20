@@ -22,10 +22,10 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
 
     path('baja', TemplateView.as_view(template_name='baja.html'), name='baja'),
-    path('contacto', TemplateView.as_view(template_name='contacto.html'), name='contacto'),
+    path('contact', TemplateView.as_view(template_name='contact.html'), name='contact'),
     path('logup', TemplateView.as_view(template_name='logup.html'), name='logup'),
-    path('mapa', views.mapa, name='mapa'),
-    path('viajes', views.viajes, name='viajes'),
+    path('map', views.map, name='map'),
+    path('trips', views.trips, name='trips'),
 
     path('debug', views.debug),
 ]
