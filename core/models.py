@@ -14,6 +14,7 @@ class User(AbstractUser):
     points = models.IntegerField(default=0)
 
     carType = models.ForeignKey(CarType, on_delete=models.SET_NULL, null=True)
+    #TODO: add 'passengers'
 
 
 class Trip(models.Model):
