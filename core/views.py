@@ -10,11 +10,13 @@ def map(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             request.user.carType = CarType.objects.get(pk=request.POST.get('carType'))
+            request.user.passengers = request.POST.get('passengers')
             request.user.save()
 
     params = {}
     params['carTypes'] = CarType.objects.all()
     params['carUser'] = request.user.carType if request.user.is_authenticated else None
+    params['passengersUser'] = request.user.passengers if request.user.is_authenticated else 1
 
     return render(request, 'map.html', params)
 
