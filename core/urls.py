@@ -23,7 +23,7 @@ urlpatterns = [
 
     path('baja', TemplateView.as_view(template_name='baja.html'), name='baja'),
     path('contact', TemplateView.as_view(template_name='contact.html'), name='contact'),
-    path('logup', TemplateView.as_view(template_name='logup.html'), name='logup'),
+    path('signup', views.signup, name='signup'),
     path('map', views.map, name='map'),
     path('trips', views.trips, name='trips'),
 

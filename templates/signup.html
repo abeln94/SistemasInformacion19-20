@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'signup' %}" class="contenedor_log">
+    <h1>Registro</h1>
+    {% csrf_token %}
+    <input type="email" id="email" name="email" placeholder="Email de contacto" class="box">
+    <input type="text" id="username" name="username" placeholder="Nombre de usuario" class="box">
+    <input type="password" id="password" name="password" placeholder="Contraseña" class="box">
+    <input type="password" id="repassword" name="repassword" placeholder="Reescribir contraseña" class="box">
+    <button type="submit"> Registrarse</button>
+
+    {% if errors.password %}
+    <h2>Las contraseñas no coinciden</h2>
+    {% endif %}
+
+    {% if errors.registered %}
+    <h2>El usuario o el correo ya están registrados</h2>
+    {% endif %}
+
+</form>
+
+{% endblock %}
