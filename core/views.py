@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+from core.maps import getDistance
 from core.models import Trip, CarType, User
 
 
@@ -9,13 +10,14 @@ from core.models import Trip, CarType, User
 
 
 def map(request):
+    params = {}
     if request.method == 'POST':
         if request.user.is_authenticated:
             request.user.carType = CarType.objects.get(pk=request.POST.get('carType'))
             request.user.passengers = request.POST.get('passengers')
             request.user.save()
+        getDistance()
 
-    params = {}
     params['carTypes'] = CarType.objects.all()
     params['carUser'] = request.user.carType if request.user.is_authenticated else None
     params['passengersUser'] = request.user.passengers if request.user.is_authenticated else 1
