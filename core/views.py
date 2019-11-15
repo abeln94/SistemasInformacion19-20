@@ -1,13 +1,16 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.views import generic
 
 from core.maps import getDistance
-from core.models import Trip, CarType, User
+from core.models import Trip, CarType, User, Post
 
 
 # Create your views here.
 
+class PostList(generic.ListView):
+    queryset = Post.objects.filter(status=1).order_by('-created_on')
+    template_name = 'home.html'
 
 def map(request):
     params = {}

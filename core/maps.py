@@ -1,6 +1,6 @@
 # importing required libraries
 import json
-import urllib3
+#import urllib3
 
 def getDistance():
 
@@ -23,7 +23,7 @@ def getCoordinates(address):
     return r[0]['lat'] + ',' + r[0]['lon']
 
 def query(url):
-    r = urllib3.PoolManager(headers={'user-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'}).request('GET', url)
+    r = None # urllib3.PoolManager(headers={'user-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'}).request('GET', url)
 
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print(r.data)
