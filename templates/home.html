@@ -4,8 +4,17 @@
 {% block title %}Página principal{% endblock %}
 
 {% block content %}
-
 <section>
+    {% for post in post_list %}
+    <article>
+        <img src="{{post.image}}"
+             alt="{{ post.imageAlt }}">
+        <h2> {{ post.title }} </h2>
+        <p>
+            {{ post.content }}
+        </p>
+    </article>
+    {% endfor %}
     <article>
         <img src="{% static 'images/noticias/plantarArbol.jpg' %}" alt="Imagen de campaña de plantación de árboles 2018">
         <h2> Campaña por la preservación de la naturaleza </h2>
@@ -49,16 +58,6 @@
         </ul>
         </p>
     </article>
-    {% for post in post_list %}
-    <article>
-        <img src="{{post.image}}"
-             alt="{{ post.imageAlt }}">
-        <h2> {{ post.title }} </h2>
-        <p>
-            {{ post.content }}
-        </p>
-    </article>
-    {% endfor %}
 </section>
 
 {% endblock %}

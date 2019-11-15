@@ -7,6 +7,16 @@
 
 <section id="calculadora">
     <img id="mapa" src="{% static 'images/mapa.png' %}" alt="Mapa de Zaragoza">
+    <br>
+    <iframe
+      name="mapframe" width="425" height="350"
+      src="https://www.google.com/maps?z=18&output=embed&ll={{origin}}">
+    </iframe>
+    <iframe
+      name="mapframe" width="425" height="350"
+      src="https://www.google.com/maps?z=18&output=embed&ll={{dest}}">
+    </iframe>
+    <h1>{{dist}}</h1>
     <form method="post" action="#" class="contenedor_log">
         {% csrf_token %}
         <div>

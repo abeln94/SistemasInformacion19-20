@@ -44,6 +44,7 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     updated_on = models.DateTimeField(auto_now=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
 
     class Meta:
         ordering = ['-created_on']

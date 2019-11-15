@@ -12,6 +12,7 @@ class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'home.html'
 
+
 def map(request):
     params = {}
     if request.method == 'POST':
@@ -19,7 +20,10 @@ def map(request):
             request.user.carType = CarType.objects.get(pk=request.POST.get('carType'))
             request.user.passengers = request.POST.get('passengers')
             request.user.save()
-        getDistance()
+        dist, origin, dest = getDistance()
+        params['dist'] = dist
+        params['origin'] = origin
+        params['dest'] = dest
 
     params['carTypes'] = CarType.objects.all()
     params['carUser'] = request.user.carType if request.user.is_authenticated else None
@@ -45,14 +49,14 @@ def signup(request):
         repassword = request.POST.get('repassword')
 
         if password != repassword:
-            params.setdefault('errors',{})['password'] = True
+            params.setdefault('errors', {})['password'] = True
             print('invalid password')
 
         if User.objects.filter(username=username).exists():
-            params.setdefault('errors',{})['registered'] = True
+            params.setdefault('errors', {})['registered'] = True
             print('invalid username')
         if User.objects.filter(email=email).exists():
-            params.setdefault('errors',{})['registered'] = True
+            params.setdefault('errors', {})['registered'] = True
             print('invalid email')
 
         if 'errors' not in params:
