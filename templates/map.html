@@ -6,32 +6,38 @@
 {% block content %}
 
 <section id="calculadora">
-    <img id="mapa" src="{% static 'images/mapa.png' %}" alt="Mapa de Zaragoza">
+<!--    <img id="mapa" src="{% static 'images/mapa.png' %}" alt="Mapa de Zaragoza">-->
     <br>
     <iframe
       name="mapframe" width="425" height="350"
-      src="https://www.google.com/maps?z=18&output=embed&ll={{origin}}">
+      src="https://www.google.com/maps?z=18&output=embed&ll={{source}}">
     </iframe>
     <iframe
       name="mapframe" width="425" height="350"
       src="https://www.google.com/maps?z=18&output=embed&ll={{dest}}">
     </iframe>
-    <h1>{{dist}}</h1>
+    {% if error %}
+        <h2>Campos vacíos</h2>
+    {% elif costCar%}
+        <h1>Coste en coche: {{costCar}} µg/m3</h1>
+        <h1>Coste en autobús: {{costBus}} µg/m3</h1>
+        {% if percentDiff < 100 %}
+            <h1>¡Se ahorra un {{percentDiff}}% !</h1>
+<!--        { % else % }-->
+<!--            <h1>Es peor el autobús? pues vaya {{percentDiff}}% </h1>-->
+        {% endif %}
+    {% endif %}
     <form method="post" action="#" class="contenedor_log">
         {% csrf_token %}
         <div>
             <h1>Origen</h1>
 
-            <input type="text" id="origen" name="origen" placeholder="Origen" class="box">
-
-            <input type="text" id="localizacionO" name="localizacionO" placeholder="Localización" class="box">
+            <input type="text" id="source" name="source" placeholder="Origen" class="box" value="{{source_form}}">
         </div>
         <div>
             <h1>Destino</h1>
 
-            <input type="text" id="destino" name="destino" placeholder="Destino" class="box">
-
-            <input type="text" id="localizacionD" name="localizacionD" placeholder="Localización" class="box">
+            <input type="text" id="dest" name="dest" placeholder="Destino" class="box" value="{{dest_form}}">
         </div>
 
         <div>

@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -16,14 +18,24 @@ class PostList(generic.ListView):
 def map(request):
     params = {}
     if request.method == 'POST':
+        params['source_form'] = request.POST.get('source')
+        params['dest_form'] = request.POST.get('dest')
+
+        cartype = CarType.objects.get(pk=request.POST.get('carType'))
         if request.user.is_authenticated:
-            request.user.carType = CarType.objects.get(pk=request.POST.get('carType'))
+            request.user.carType = cartype
             request.user.passengers = request.POST.get('passengers')
             request.user.save()
-        dist, origin, dest = getDistance()
-        params['dist'] = dist
-        params['origin'] = origin
-        params['dest'] = dest
+
+        if params['source_form'] is '' or params['dest_form'] is '':
+            params['error'] = True
+        else:
+            dist, source, dest = getDistance(params['source_form'], params['dest_form'])
+            params['costCar'] = dist * cartype.contaminationRate / int(request.user.passengers)
+            params['costBus'] = dist * random.uniform(0.1, 0.9)
+            params['percentDiff'] = params['costBus'] / params['costCar'] * 100
+            params['source'] = source
+            params['dest'] = dest
 
     params['carTypes'] = CarType.objects.all()
     params['carUser'] = request.user.carType if request.user.is_authenticated else None
@@ -43,19 +55,24 @@ def signup(request):
     params = {}
     if request.method == 'POST':
 
-        username = request.POST.get('username')
-        email = request.POST.get('email')
+        params['username'] = username = request.POST.get('username')
+        params['email'] = email = request.POST.get('email')
         password = request.POST.get('password')
         repassword = request.POST.get('repassword')
 
-        if password != repassword:
+        if '' in (username, email, password, repassword):
+            params.setdefault('errors', {})['empty'] = True
+            print('invalid password')
+
+        if password is not '' and password != repassword:
             params.setdefault('errors', {})['password'] = True
             print('invalid password')
 
-        if User.objects.filter(username=username).exists():
+        if username is not '' and User.objects.filter(username=username).exists():
             params.setdefault('errors', {})['registered'] = True
             print('invalid username')
-        if User.objects.filter(email=email).exists():
+
+        if email is not '' and User.objects.filter(email=email).exists():
             params.setdefault('errors', {})['registered'] = True
             print('invalid email')
 

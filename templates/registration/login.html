@@ -8,7 +8,7 @@
     {% csrf_token %}
     <h1>Entrar</h1>
 
-    <input type="text" id="username" name="{{ form.username.name }}" placeholder="Nombre de usuario" class="box">
+    <input type="text" id="username" name="{{ form.username.name }}" placeholder="Nombre de usuario" class="box" value="{{form.username.value |default_if_none:''}}">
 
     <input type="password" id="password" name="{{ form.password.name }}" placeholder="Contraseña" class="box">
 
