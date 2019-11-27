@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title> EcoRutas: Pagina de Contacto</title>
+		<meta charset="UTF-8">
+		<meta name="description" content="EcoRutas"/>
+		<meta name="keywords" content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,contacto,mensaje,desarrolladores"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/x-icon" href="images/icono.ico">
+		 <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+
+		<!-- Iconos para Bootstrap 4 -->
+    	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	</head>	
+	<body>
+		<!-- Cabecera de la página -->
+	      <!-- Barra de navegación superior -->
+	    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	      <!-- Logo del ayuntamiento de Zaragoza (a la izquierda) -->
+	      <img src="images/logo-ayto.png" class="navbar-brand mr-auto img-fluid"  
+	        alt="logo del ayuntamiento de Zaragoza">
+	      <!-- Título de la página (en el centro) -->
+	      <a class="navbar-brand abs" href="index.html">
+	        EcoRutas
+	      </a>
+	      <!-- Icono de usuario (a la derecha) -->
+	      <a href="login.html" class="ml-auto nav-flex-icons nav-item avatar nav-link p-0">
+	        <img src="images/icon_user.png"  class="rounded-circle z-depth-0" 
+	          alt="icono de usuario" height="35">
+	      </a>
+	    </nav>
+	      <!-- Barra de navegación inferior -->
+	    <nav class="row">
+	      <input type="button" class="col btn btn-outline-success" onclick="location.href='index.html'" value="Noticias">
+	      <input type="button" class="col btn btn-outline-success" onclick="location.href='mapa.html'" value="Calculadora">
+	    </nav>
+
+		<!-- Parte principal -->
+		<div class="container">
+			<form class="text-center border border-light p-5" method="post" action="index.html">
+				<p class="h4 mb-4">Formulario de contacto</p>
+				<!-- E-mail -->
+				<input class="form-control mb-4" type="email" id="email" name="email" placeholder="Email de contacto">
+				 <!-- Motivo -->
+			    <label>Motivo</label>
+			    <select class="browser-default custom-select mb-4">
+			        <option value="" disabled>Choose option</option>
+			        <option value="1" selected>Comentario</option>
+			        <option value="2">Notificar de un error</option>
+			        <option value="3">Olvido de contraseña</option>
+			        <option value="4">Sugerencia</option>
+			    </select>
+				<!-- Mensaje -->
+			    <div class="form-group">
+			        <textarea class="form-control rounded-0" id="texto" rows="3" placeholder="Tu mensaje nos ayuda a mejorar"></textarea>
+			    </div>
+				<button class="btn btn-success btn-block" type="submit"> Enviar </button>
+			</form>
+		</div>
+		<!-- Pie de página -->
+	    <footer class="page-footer bg-dark">
+	      <!-- Fila de contenido principal -->
+	      <div class="row">
+	        <div class="col-4 mr-auto mt-2">
+	          <a href="https://www.zaragoza.es/sedeelectronica/">
+	            <img class="img-fluid d-block mx-auto" src="images/ayuntamiento.png" alt="Ayuntamiento de Zaragoza">
+	          </a>
+	          <p class="d-none d-sm-block text-light text-center">Web del ayuntamiento de Zaragoza</p>
+	        </div>
+	        <p class="col-4 d-none d-sm-block text-light text-center mt-2">Desarrollado por EcoTeam</p>
+	        <div class="col-4 ml-auto mt-2">
+	          <i class="fas fa-envelope text-light"></i>
+	          <a class="text-light" href="contacto.html">Contacto</a>
+	        </div>
+	      </div>
+	      <!-- Copyright -->
+	      <div class="footer-copyright py-3 text-center text-light">
+	         © 2019 Copyright: <a href="https://choosealicense.com/licenses/mit/"> Mit License </a>
+	      </div>
+	    </footer>
+	</body>
+</html>
