@@ -1,16 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}PContacto{% endblock %}
+{% block title %}Página de Contacto{% endblock %}
 
 {% block content %}
 
-<form method="post" action="{% url 'home' %}" class="contenedor_log">
-    {% csrf_token %}
-
-    <h1>Contacto con desarrolladores</h1>
-    <input type="email" id="email" name="email" placeholder="Email de contacto" class="box">
-    <textarea id="text" class="box" placeholder="Tus opiniones son importantes y nos ayudan a mejorar"></textarea>
-    <button type="submit"> Enviar</button>
-</form>
+<div class="container">
+    <form class="text-center border border-light p-5" method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <p class="h4 mb-4">Formulario de contacto</p>
+        <!-- E-mail -->
+        <input class="form-control mb-4" type="email" id="email" name="email" placeholder="Email de contacto">
+         <!-- Motivo -->
+        <label>Motivo</label>
+        <select class="browser-default custom-select mb-4">
+            <option value="" disabled>Choose option</option>
+            <option value="1" selected>Comentario</option>
+            <option value="2">Notificar de un error</option>
+            <option value="3">Olvido de contraseña</option>
+            <option value="4">Sugerencia</option>
+        </select>
+        <!-- Mensaje -->
+        <div class="form-group">
+            <textarea class="form-control rounded-0" id="texto" rows="3" placeholder="Tu mensaje nos ayuda a mejorar"></textarea>
+        </div>
+        <button class="btn btn-success btn-block" type="submit"> Enviar </button>
+    </form>
+</div>
 
 {% endblock %}

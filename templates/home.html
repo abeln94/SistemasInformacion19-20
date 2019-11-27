@@ -4,17 +4,24 @@
 {% block title %}Página principal{% endblock %}
 
 {% block content %}
-<section>
-    {% for post in post_list %}
-    <article>
-        <img src="{% static post.image%}"
-             alt="{{post.imageAlt}}">
-        <h2> {{ post.title }} </h2>
-        <p>
-            {{ post.content }}
-        </p>
-    </article>
-    {% endfor %}
-</section>
+
+<div class="container">
+    <section class="mt-2 mb-2">
+        {% for post in post_list %}
+        <article class="row text-center border border-success p-5">
+            <img class="col-md-4 img-fluid" src="{% static post.image%}"
+                 alt="{{post.imageAlt}}">
+            <div class="col-md-8">
+                <h2> {{ post.title }} </h2>
+<!--                <a class="float-left" href="#"> Autor </a>-->
+<!--                <p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i> 2 days, 8 hours</p>-->
+            </div>
+            <p class="row d-none d-sm-block">
+                {{ post.content }}
+            </p>
+        </article>
+        {% endfor %}
+    </section>
+</div>
 
 {% endblock %}

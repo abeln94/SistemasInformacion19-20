@@ -47,11 +47,11 @@ def map(request):
     return render(request, 'map.html', params)
 
 
-def trips(request):
+def user(request):
     params = {}
     if request.user.is_authenticated:
         params['trips'] = Trip.objects.filter(user=request.user)
-    return render(request, 'trips.html', params)
+    return render(request, 'user.html', params)
 
 
 def signup(request):

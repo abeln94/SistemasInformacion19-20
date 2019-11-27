@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Dar baja{% endblock %}
+{% block title %}Darse de baja{% endblock %}
 
 {% block content %}
 
-<form method="post" action="{% url 'home' %}" class="contenedor_log">
-    <h1>Administración de borrado de cuentas</h1>
-    <input type="email" id="email" name="email" placeholder="Email de usuario" class="box">
-    <input type="password" id="password" name="password" placeholder="Contraseña de administrador" class="box">
-    <button type="submit"> Eliminar usuario</button>
-</form>
+<div class="container">
+    <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        <h1>Administración de borrado de cuentas</h1>
+        <input type="email" id="email" name="email" placeholder="Email de usuario">
+        <input type="password" id="password" name="password" placeholder="Contraseña de administrador">
+        <button type="submit"> Eliminar usuario </button>
+    </form>
+</div>
 
 {% endblock %}

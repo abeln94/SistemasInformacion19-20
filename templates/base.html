@@ -1,53 +1,85 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="es">
 <head>
-    <title>EcoRutas: {% block title %}{% endblock %}</title>
+    <title> EcoRutas: {% block title %}{% endblock %} </title>
     <meta charset="UTF-8">
     <meta name="description" content="EcoRutas"/>
-    <meta name="keywords"
-          content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,calculadora de rutas"/>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="keywords" content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,calculadora de rutas"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/icono.ico' %}">
-    <link href="{% static 'styles/main.css' %}" rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Iconos para Bootstrap 4 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    {% block head %}{% endblock %}
 </head>
 <body>
 <!-- Cabecera de la página -->
-<header>
-    <div>
-        <ul>
-            <li><a href="{% url 'signup' %}">Registrarse</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'trips' %}">{{ user_label }}</a></li>
-            <li><a href="{% url 'logout' %}">Desconectar</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}">Entrar</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    <img class="titulo" src="{% static 'images/EcoRutas.png' %}" alt="Logo de EcoRutas">
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Página principal</a></li>
-            <li><a href="{% url 'map' %}">Calculadora de rutas</a></li>
-        </ul>
-    </nav>
-</header>
+<!-- Barra de navegación superior -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Logo del ayuntamiento de Zaragoza (a la izquierda) -->
+    <img src="{% static 'images/logo-ayto.png' %}" class="navbar-brand mr-auto img-fluid"
+         alt="logo del ayuntamiento de Zaragoza">
+    <!-- Título de la página (en el centro) -->
+    <a class="navbar-brand abs" href="{% url 'home' %}">
+        EcoRutas
+    </a>
+    <!-- Icono de usuario (a la derecha) -->
+    {% if user.is_authenticated %}
+    <a href="{% url 'user' %}" class="ml-auto nav-flex-icons nav-item avatar nav-link p-0">
+        <img src="{% static 'images/icon_user.png' %}" class="rounded-circle z-depth-0"
+             alt="icono de usuario" height="35">
+        <span>{{ user_label }}</span>
+    </a>
+    {% else %}
+    <a href="{% url 'login' %}" class="ml-auto nav-flex-icons nav-item avatar nav-link p-0">
+        <img src="{% static 'images/icon_user.png' %}" class="rounded-circle z-depth-0"
+             alt="icono de usuario" height="35">
+    </a>
+    {% endif %}
+</nav>
+<!-- Barra de navegación inferior -->
+<nav class="row">
+    <input type="button" class="col btn btn-outline-success {% if 'home' == request.resolver_match.url_name %} active {% endif %}" onclick="location.href='{% url 'home' %}'" value="Noticias">
+    <input type="button" class="col btn btn-outline-success {% if 'map' == request.resolver_match.url_name %} active {% endif %}" onclick="location.href='{% url 'map' %}'" value="Calculadora">
+</nav>
 
 <!-- Parte principal -->
 {% block content %}
 {% endblock %}
 
 <!-- Pie de página -->
-<footer>
-    <ul>
-        <li><a href="https://www.zaragoza.es/sedeelectronica/">
-            <img src="{% static 'images/ayuntamiento.png' %}" alt="Ayuntamiento de Zaragoza">
-        </a></li>
-        <li><a href="{% url 'contact' %}">Formulario de contacto</a></li>
-    </ul>
+<footer class="page-footer bg-dark">
+    <!-- Fila de contenido principal -->
+    <div class="row">
+        <div class="col-4 mr-auto mt-2">
+            <a href="https://www.zaragoza.es/sedeelectronica/">
+                <img class="img-fluid d-block mx-auto" src="{% static 'images/ayuntamiento.png' %}" alt="Ayuntamiento de Zaragoza">
+            </a>
+            <p class="d-none d-sm-block text-light text-center">Web del ayuntamiento de Zaragoza</p>
+        </div>
+        <p class="col-4 d-none d-sm-block text-light text-center mt-2">Desarrollado por EcoTeam</p>
+        <div class="col-4 ml-auto mt-2">
+            <i class="fas fa-envelope text-light"></i>
+            <a class="text-light" href="{% url 'contact' %}">Contacto</a>
+        </div>
+    </div>
+    <!-- Copyright -->
+    <div class="footer-copyright py-3 text-center text-light">
+        © 2019 Copyright: <a href="https://choosealicense.com/licenses/mit/"> Mit License </a>
+    </div>
 </footer>
-
 </body>
 </html>

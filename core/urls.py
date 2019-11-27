@@ -25,7 +25,7 @@ urlpatterns = [
     path('contact', TemplateView.as_view(template_name='contact.html'), name='contact'),
     path('signup', views.signup, name='signup'),
     path('map', views.map, name='map'),
-    path('trips', views.trips, name='trips'),
+    path('user', views.user, name='user'),
 
     path('debug', views.debug),
 ]
