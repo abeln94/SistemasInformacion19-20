@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import generic
 
-from core.maps import getDistance
+from core.maps import getDistance, TooManyRequests
 from core.models import Trip, CarType, User, Post
 
 
@@ -30,12 +30,15 @@ def map(request):
         if params['source_form'] is '' or params['dest_form'] is '':
             params['error'] = True
         else:
-            dist, source, dest = getDistance(params['source_form'], params['dest_form'])
-            params['costCar'] = dist * cartype.contaminationRate / int(request.user.passengers)
-            params['costBus'] = dist * random.uniform(0.1, 0.9)
-            params['percentDiff'] = params['costBus'] / params['costCar'] * 100
-            params['source'] = source
-            params['dest'] = dest
+            try:
+                dist, source, dest = getDistance(params['source_form'], params['dest_form'])
+                params['costCar'] = dist * cartype.contaminationRate / int(request.user.passengers)
+                params['costBus'] = dist * random.uniform(0.1, 0.9)
+                params['percentDiff'] = params['costBus'] / params['costCar'] * 100
+                params['source'] = source
+                params['dest'] = dest
+            except TooManyRequests:
+                params['toomanyrequests'] = True
 
     params['carTypes'] = CarType.objects.all()
     params['carUser'] = request.user.carType if request.user.is_authenticated else None

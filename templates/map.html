@@ -5,20 +5,39 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
 <section id="calculadora">
-<!--    <img id="mapa" src="{% static 'images/mapa.png' %}" alt="Mapa de Zaragoza">-->
-    <br>
-    <iframe
-      name="mapframe" width="425" height="350"
-      src="https://www.google.com/maps?z=18&output=embed&ll={{source}}">
-    </iframe>
-    <iframe
-      name="mapframe" width="425" height="350"
-      src="https://www.google.com/maps?z=18&output=embed&ll={{dest}}">
-    </iframe>
     {% if error %}
         <h2>Campos vacíos</h2>
+    {% elif toomanyrequests %}
+        <h2>Espera unos segundos, que la api no puede</h2>
     {% elif costCar%}
+        <div id="map" class="map map-home" style="margin:auto;height:350px;width:425px"></div>
+
+        <script>
+            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+            var map = L.map('map').addLayer(osm);
+            var origin = [{{source}}];
+            var destiny = [{{dest}}];
+            map.fitBounds([origin,destiny]);
+            L.marker(origin)
+                .bindTooltip("Origen", { permanent: true, direction: 'right' })
+                .addTo(map)
+            L.marker(destiny)
+                .bindTooltip("Destino", { permanent: true, direction: 'right' })
+                .addTo(map)
+        </script>
+        <br>
+
         <h1>Coste en coche: {{costCar}} µg/m3</h1>
         <h1>Coste en autobús: {{costBus}} µg/m3</h1>
         {% if percentDiff < 100 %}
