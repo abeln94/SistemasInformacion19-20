@@ -30,7 +30,7 @@
         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
             Por favor, evita constaseñas cortas o que no alternen números y letras
         </small>
-        <input class="form-control mb-4" type="password" id="repassword" placeholder="Reescribir contraseña">
+        <input class="form-control mb-4" type="password" id="repassword" name="repassword" placeholder="Reescribir contraseña">
         <!-- Términos de servicio -->
 <!--        <div class="form-group form-check">-->
 <!--            <label class="form-check-label">-->
@@ -41,8 +41,6 @@
 <!--            </label>-->
 <!--        </div>-->
 
-        <!-- Submit -->
-        <button class="btn btn-success my-4 btn-block" type="submit"> Registrarse</button>
 
         {% if errors.empty %}
         <h2>Campos vacíos</h2>
@@ -55,6 +53,10 @@
         {% if errors.registered %}
         <h2>El usuario o el correo ya están registrados</h2>
         {% endif %}
+
+        <!-- Submit -->
+        <button class="btn btn-success my-4 btn-block" type="submit"> Registrarse</button>
+
     </form>
 </div>
 

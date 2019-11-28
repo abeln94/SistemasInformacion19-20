@@ -17,11 +17,12 @@
 
         <input class="form-control mb-4" type="password" id="password" name="{{ form.password.name }}" placeholder="Contraseña">
 
-        <button class="btn btn-success btn-block my-4" type="submit"> Entrar</button>
 
         {% if form.errors %}
         <h5>Usuario y contraseña no coinciden.</h5>
         {% endif %}
+
+        <button class="btn btn-success btn-block my-4" type="submit"> Entrar</button>
 
         <div class="d-flex justify-content-around">
             <div>

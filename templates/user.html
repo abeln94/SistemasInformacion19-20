@@ -8,10 +8,10 @@
 {% if user.is_authenticated %}
 <div class="container row mt-2 mb-2">
     <div class="col-md-6">
-        <a href="{% url 'logout' %}">Desconectar</a>
         <img src="{% static 'images/surfer_astronaut.jpg' %}" alt="user photo" class="img-fluid mx-auto">
     </div>
     <div class="col-md-6 text-center border border-light p-5">
+        <a href="{% url 'logout' %}">Desconectar</a>
         <p class="h4 mb-4">Mis datos</p>
         <input type="text" id="name" class="form-control" placeholder="Nombre">
         <input type="text" id="surname" class="form-control" placeholder="Apellidos">
