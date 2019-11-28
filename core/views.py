@@ -32,7 +32,7 @@ def map(request):
         else:
             try:
                 dist, source, dest = getDistance(params['source_form'], params['dest_form'])
-                params['costCar'] = dist * cartype.contaminationRate / int(request.user.passengers)
+                params['costCar'] = dist * cartype.contaminationRate / int(request.POST.get('passengers'))
                 params['costBus'] = dist * random.uniform(0.1, 0.9)
                 params['percentDiff'] = params['costBus'] / params['costCar'] * 100
                 params['source'] = source

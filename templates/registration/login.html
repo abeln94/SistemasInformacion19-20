@@ -6,17 +6,14 @@
 
 <div class="container">
     <form class="text-center border border-light p-5" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <p class="h4 mb-4">Entrar</p>
 
         <p>¿No tienes cuenta?
             <a href="{% url 'signup' %}">Regístrate</a>
         </p>
 
-
-
-        {% csrf_token %}
-        <p class="h4 mb-4">Entrar</p>
-
-        <input class="form-control mb-4" type="text" id="usuario" name="{{ form.username.name }}" placeholder="Nombre de ususario" value="{{form.username.value |default_if_none:''}}">
+        <input class="form-control mb-4" type="text" id="usuario" name="{{ form.username.name }}" placeholder="Nombre de usuario" value="{{form.username.value |default_if_none:''}}">
 
         <input class="form-control mb-4" type="password" id="password" name="{{ form.password.name }}" placeholder="Contraseña">
 
