@@ -27,7 +27,7 @@
 	      <!-- Barra de navegación superior -->
 	    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	      <!-- Logo del ayuntamiento de Zaragoza (a la izquierda) -->
-	      <img src="images/logo-ayto.png" class="navbar-brand mr-auto img-fluid"  
+	      <img src="images/logo-empresa.png" class="navbar-brand mr-auto img-fluid"  
 	        alt="logo del ayuntamiento de Zaragoza">
 	      <!-- Título de la página (en el centro) -->
 	      <a class="navbar-brand abs" href="index.html">
@@ -50,7 +50,11 @@
 			<form class="text-center border border-light p-5" method="post" action="index.html">
 				<p class="h4 mb-4">Entrar</p>
 
-					<input class="form-control mb-4" type="name" id="usuario" name="usuario" placeholder="Nombre de ususario">
+					<p>¿No tienes cuenta?
+					    <a href="logup.html">Regístrate</a>
+					</p>
+
+					<input class="form-control mb-4" type="name" id="usuario" name="usuario" placeholder="Nombre de usuario">
 			  
 					<input class="form-control mb-4" type="password" id="password" name="password" placeholder="Contraseña">
 			  
@@ -61,9 +65,6 @@
            				<a href="contacto.html"> ¿Has olvidado tu contraseña? </a>
         			</div>
     			</div>
-				<p>¿No tienes cuenta?
-				    <a href="logup.html">Regístrate</a>
-				</p>
 			</form>
 		</div>
 		<!-- Pie de página -->
@@ -78,8 +79,10 @@
 	        </div>
 	        <p class="col-4 d-none d-sm-block text-light text-center mt-2">Desarrollado por EcoTeam</p>
 	        <div class="col-4 ml-auto mt-2">
-	          <i class="fas fa-envelope text-light"></i>
-	          <a class="text-light" href="contacto.html">Contacto</a>
+	        	<span class="border border-light rounded">
+		          <i class="fas fa-envelope text-light"></i>
+		          <a class="text-light" href="contacto.html">Contacto</a>
+		        </span>
 	        </div>
 	      </div>
 	      <!-- Copyright -->
