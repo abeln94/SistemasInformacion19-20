@@ -41,8 +41,12 @@ def map(request):
                 params['toomanyrequests'] = True
 
     params['carTypes'] = CarType.objects.all()
-    params['carUser'] = request.user.carType if request.user.is_authenticated else None
-    params['passengersUser'] = request.user.passengers if request.user.is_authenticated else 1
+    params['carUser'] = request.user.carType if request.user.is_authenticated \
+        else CarType.objects.get(pk=request.POST.get('carType')) if request.method == 'POST' \
+        else None
+    params['passengersUser'] = request.user.passengers if request.user.is_authenticated \
+        else request.POST.get('passengers') if request.method == 'POST' \
+        else 1
 
     return render(request, 'map.html', params)
 
