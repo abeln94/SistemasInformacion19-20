@@ -13,8 +13,8 @@
                  alt="{{post.imageAlt}}">
             <div class="col-md-8">
                 <h2> {{ post.title }} </h2>
-<!--                <a class="float-left" href="#"> Autor </a>-->
-<!--                <p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i> 2 days, 8 hours</p>-->
+                <p class="float-left"> Autor: {{ post.author }} </p>
+                <p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i> {{post.created_on}}</p>
             </div>
             <p class="row d-none d-sm-block">
                 {{ post.content }}

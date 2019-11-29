@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from .models import CarType, Post, User, Trip
 
@@ -28,11 +29,32 @@ class TripAdmin(admin.ModelAdmin):
 
 admin.site.register(Trip, TripAdmin)
 
+@admin.register(User)
+class UserAdmin(UserAdmin):
+    """Define admin model for custom User model with no email field."""
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('email',)
+
 ############################################################################
 ####################### debug objects ######################################
 ############################################################################
 try:
-    su = User.objects.create_superuser("user", "user@user.user", "user")
+    su = User.objects.create_superuser(first_name="Adminis", last_name="Trator", email="user@user.user", password="user")
     CarType.objects.create(model="A", contaminationRate=1)
     CarType.objects.create(model="B", contaminationRate=2)
     CarType.objects.create(model="C", contaminationRate=3)

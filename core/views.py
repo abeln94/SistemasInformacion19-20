@@ -62,31 +62,32 @@ def signup(request):
     params = {}
     if request.method == 'POST':
 
-        params['username'] = username = request.POST.get('username')
+        params['first_name'] = first_name = request.POST.get('first_name')
+        params['last_name'] = last_name = request.POST.get('last_name')
         params['email'] = email = request.POST.get('email')
         password = request.POST.get('password')
         repassword = request.POST.get('repassword')
 
-        if '' in (username, email, password, repassword):
+        if '' in (first_name, last_name, email, password, repassword):
             params.setdefault('errors', {})['empty'] = True
-            print('invalid password')
+            print('empty data')
 
-        if password is not '' and password != repassword:
+        if password != '' and password != repassword:
             params.setdefault('errors', {})['password'] = True
             print('invalid password')
 
-        if username is not '' and User.objects.filter(username=username).exists():
+        if email != '' and User.objects.filter(email=email).exists():
             params.setdefault('errors', {})['registered'] = True
-            print('invalid username')
+            print('invalid email')
 
-        if email is not '' and User.objects.filter(email=email).exists():
-            params.setdefault('errors', {})['registered'] = True
+        if not request.POST.get('remember'):
+            params.setdefault('errors', {})['not_accepted'] = True
             print('invalid email')
 
         if 'errors' not in params:
             print('correct', params)
-            User.objects.create_user(username, email, password)
-            user = authenticate(username=username, password=password)
+            User.objects.create_user(first_name=first_name, last_name=last_name, email=email, password=password)
+            user = authenticate(email=email, password=password)
             login(request, user)
             return redirect('home')
 
@@ -115,3 +116,32 @@ def debug(request):
             ).save()
 
     return render(request, 'debug.html')
+
+
+def deleteUser(request):
+    if request.method != 'POST':
+        return render(request, 'delete.html')
+
+    if not request.user.is_authenticated:
+        return redirect('home')
+
+    if 'delete' not in request.POST:
+        return redirect('user')
+
+    request.user.delete()
+    return redirect('logout')
+
+
+def contact(request):
+    params = {}
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        reason = request.POST.get('reason')
+        message = request.POST.get('message')
+        print("Message received:")
+        print(email)
+        print(reason)
+        print(message)
+        print("It was correctly ommited")
+        params['sent'] = True
+    return render(request, 'contact.html', params)

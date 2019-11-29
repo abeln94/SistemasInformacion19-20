@@ -17,7 +17,6 @@
 
 <div class="container row">
     <div class="col-lg-6 mt-2 mb-2 text-center border border-light p-5">
-        <!--        <img class="img-fluid mx-auto d-block" src="images/mapa.png" alt="Mapa de Zaragoza">-->
         <div id="map" class="map map-home img-fluid mx-auto d-block" style="margin:auto;height:350px;width:425px"></div>
 
         <script>
@@ -50,8 +49,6 @@
         <h5>Coste en autobús: {{costBus}} µg/m3</h5>
         {% if percentDiff < 100 %}
         <h5>¡Se ahorra un {{percentDiff}}% !</h5>
-        <!--        { % else % }-->
-        <!--            <h1>Es peor el autobús? pues vaya {{percentDiff}}% </h1>-->
         {% endif %}
         {% endif %}
     </div>

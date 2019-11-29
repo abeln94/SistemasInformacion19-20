@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar usuario{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="container">
+    <form class="text-center border border-light p-5" method="post" action="{% url 'delete' %}">
+        {% csrf_token %}
+        <p class="h4 mb-4">Eliminar usuario</p>
+
+        <p>Seguro que deseas borrar la cuenta? esta acción no se puede deshacer</p>
+
+        <div class="form-row mb-4">
+            <button class="col btn btn-block" type="submit" name="delete">Borrar</button>
+            <button class="col btn btn-success btn-block" type="submit" name="back">Volver</button>
+        </div>
+
+    </form>
+    {% else %}
+    <h2>Necesario registrarse.</h2>
+    {% endif %}
+</div>
+
+
+{% endblock %}

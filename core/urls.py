@@ -22,10 +22,11 @@ urlpatterns = [
     path('', views.PostList.as_view(), name='home'),
 
     path('baja', TemplateView.as_view(template_name='baja.html'), name='baja'),
-    path('contact', TemplateView.as_view(template_name='contact.html'), name='contact'),
+    path('contact', views.contact, name='contact'),
     path('signup', views.signup, name='signup'),
     path('map', views.map, name='map'),
     path('user', views.user, name='user'),
+    path('delete', views.deleteUser, name="delete"),
 
     path('debug', views.debug),
 ]

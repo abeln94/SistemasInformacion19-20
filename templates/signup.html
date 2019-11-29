@@ -10,17 +10,13 @@
         <p class="h4 mb-4">Registrarse</p>
         <!-- Nombre y apellidos -->
         <div class="form-row mb-4">
-            <!--            <div class="col">-->
-            <!--                &lt;!&ndash; First name &ndash;&gt;-->
-            <!--                <input type="text" id="name" class="form-control" placeholder="Nombre">-->
-            <!--            </div>-->
-            <!--            <div class="col">-->
-            <!--                &lt;!&ndash; Last name &ndash;&gt;-->
-            <!--                <input type="text" id="surname" class="form-control" placeholder="Apellidos">-->
-            <!--            </div>-->
             <div class="col">
-                <!-- Username -->
-                <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" value="{{username}}">
+                <!-- First name -->
+                <input type="text" id="name" name="first_name" class="form-control" placeholder="Nombre"  value="{{first_name}}">
+            </div>
+            <div class="col">
+                <!-- Last name -->
+                <input type="text" id="surname" name="last_name" class="form-control" placeholder="Apellidos"  value="{{last_name}}">
             </div>
         </div>
         <!-- E-mail -->
@@ -32,14 +28,14 @@
         </small>
         <input class="form-control mb-4" type="password" id="repassword" name="repassword" placeholder="Reescribir contraseña">
         <!-- Términos de servicio -->
-<!--        <div class="form-group form-check">-->
-<!--            <label class="form-check-label">-->
-<!--                <input class="form-check-input" type="checkbox" name="remember" required>-->
-<!--                Al registrarte aceptas nuestros <a href="#" target="_blank">términos de servicio</a>-->
-<!--                <div class="valid-feedback">Puedes seguir</div>-->
-<!--                <div class="invalid-feedback">Debes aceptar los términos para seguir</div>-->
-<!--            </label>-->
-<!--        </div>-->
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember" required>
+                Al registrarte aceptas nuestros <a href="#" target="_blank">términos de servicio</a>
+                <div class="valid-feedback">Puedes seguir</div>
+                <div class="invalid-feedback">Debes aceptar los términos para seguir</div>
+            </label>
+        </div>
 
 
         {% if errors.empty %}
@@ -51,7 +47,11 @@
         {% endif %}
 
         {% if errors.registered %}
-        <h2>El usuario o el correo ya están registrados</h2>
+        <h2>El correo ya está registrado</h2>
+        {% endif %}
+
+        {% if errors.not_accepted %}
+        <h2>Debes aceptar los términos del servicio</h2>
         {% endif %}
 
         <!-- Submit -->

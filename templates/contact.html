@@ -9,11 +9,11 @@
         {% csrf_token %}
         <p class="h4 mb-4">Formulario de contacto</p>
         <!-- E-mail -->
-        <input class="form-control mb-4" type="email" id="email" name="email" placeholder="Email de contacto">
+        <input class="form-control mb-4" type="email" id="email" name="email" placeholder="Email de contacto" value="{{user.email}}">
          <!-- Motivo -->
         <label>Motivo</label>
-        <select class="browser-default custom-select mb-4">
-            <option value="" disabled>Choose option</option>
+        <select class="browser-default custom-select mb-4" name="reason">
+            <option value="" disabled>Elige motivo</option>
             <option value="1" selected>Comentario</option>
             <option value="2">Notificar de un error</option>
             <option value="3">Olvido de contraseña</option>
@@ -21,9 +21,14 @@
         </select>
         <!-- Mensaje -->
         <div class="form-group">
-            <textarea class="form-control rounded-0" id="texto" rows="3" placeholder="Tu mensaje nos ayuda a mejorar"></textarea>
+            <textarea class="form-control rounded-0" id="texto" name="message" rows="3" placeholder="Tu mensaje nos ayuda a mejorar"></textarea>
         </div>
         <button class="btn btn-success btn-block" type="submit"> Enviar </button>
+
+        {% if sent %}
+        <h2>Gracias por su mensaje</h2>
+        {% endif %}
+
     </form>
 </div>
 
