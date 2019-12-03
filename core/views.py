@@ -52,9 +52,20 @@ def map(request):
 
 
 def user(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     params = {}
-    if request.user.is_authenticated:
-        params['trips'] = Trip.objects.filter(user=request.user)
+
+    if request.method == 'POST':
+        for param in ('cardId', 'first_name', 'last_name'):
+            data = request.POST.get(param)
+            if data != '':
+                request.user.__setattr__(param, request.POST.get(param))
+            else:
+                params['error'] = True
+        request.user.save()
+    params['trips'] = Trip.objects.filter(user=request.user)
     return render(request, 'user.html', params)
 
 
@@ -94,28 +105,32 @@ def signup(request):
     return render(request, 'signup.html', params)
 
 
-def debug(request):
+def api(request):
     if request.method == 'POST':
         if request.POST.get('type') == 'addTrip' and request.user.is_authenticated:
-            # request.user.carType = request.GET.get('type', '')
-            # request.user.save()
+            start = request.POST.get('start')
+            end = request.POST.get('end')
+            try:
+                dist, source, dest = getDistance(start, end)
+                costCar = dist * 4 / 4  # default car
+                costBus = dist * random.uniform(0.1, 0.9)
+                diff = costBus / costCar * 100
+            except TooManyRequests:
+                diff = 5
+            points = 10 if diff >= 100 \
+                else 0 if diff <= 0 \
+                else int(diff / 10)
             Trip(
                 start=request.POST.get('start'),
                 end=request.POST.get('end'),
-                points=request.POST.get('points'),
+                points=points,
                 date=request.POST.get('date'),
                 user=request.user
             ).save()
-            request.user.points += int(request.POST.get('points'))
+            request.user.points += int(points)
             request.user.save()
 
-        if request.POST.get('type') == 'addCarType':
-            CarType(
-                model=request.POST.get('model'),
-                contaminationRate=request.POST.get('contaminationRate')
-            ).save()
-
-    return render(request, 'debug.html')
+    return render(request, 'api.html')
 
 
 def deleteUser(request):

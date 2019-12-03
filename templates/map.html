@@ -55,6 +55,8 @@
     <div class="col-lg-6 mt-2 mb-2">
         <form class="text-center border border-light p-5" method="post">
             {% csrf_token %}
+            <p class="mb-4">Calculadora de rutas: Desde esta página puedes comprobar el impacto en el medioambiente de un trayecto en coche respecto al mismo en autobús. Introduce una dirección origen y destino, elige el tipo de coche que utilizas y el número de personas que viajan en él, y dale a calcular.</p>
+
             <p class="h4 mb-4">Origen</p>
             <input class="form-control mb-4" type="text" id="source" name="source" placeholder="Localización origen" value="{{source_form}}">
 

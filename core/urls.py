@@ -28,7 +28,7 @@ urlpatterns = [
     path('user', views.user, name='user'),
     path('delete', views.deleteUser, name="delete"),
 
-    path('debug', views.debug),
+    path('api', views.api),
 ]
 
 

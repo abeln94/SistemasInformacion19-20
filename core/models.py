@@ -65,6 +65,7 @@ class User(AbstractUser):
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
+
 class Trip(models.Model):
     date = models.DateTimeField()
     start = models.CharField(max_length=50)

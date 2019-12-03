@@ -11,16 +11,43 @@
         <img src="{% static 'images/surfer_astronaut.jpg' %}" alt="user photo" class="img-fluid mx-auto">
     </div>
     <div class="col-md-6 text-center border border-light p-5">
-        <a href="{% url 'logout' %}">Desconectar</a>
-        <p class="h4 mb-4">Mis datos</p>
-        <div class="form-row mb-4">
-            <div class="col">Nombre y apellidos:</div>
-            <div class="col form-control">{{user}}</div>
+        <div class="mb-4">
+            <p class="h4 mb-4">Administración</p>
+            <p>
+                <a href="{% url 'logout' %}">Desconectar</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'delete' %}">Borrar cuenta</a>
+            </p>
         </div>
-        <div class="form-row mb-4">
-            <div class="col">Email:</div>
-            <div class="col form-control">{{user.email}}</div>
-        </div>
+
+        <form class="mb-4" method="post" action="#">
+            {% csrf_token %}
+            <p class="h4 mb-4">Mis datos</p>
+            <div class="form-row mb-4">
+                <div class="col">Nombre:</div>
+                <input type="text" class="col form-control text-center" name="first_name" value="{{user.first_name}}">
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">Apellidos:</div>
+                <input type="text" class="col form-control text-center" name="last_name" value="{{user.last_name}}">
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">Email:</div>
+                <div class="col form-control-static">{{user.email}}</div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col">Tarjeta autobús:</div>
+                <input type="text" class="col form-control text-center" name="cardId" value="{{user.cardId}}">
+            </div>
+
+            {% if error %}
+            <p>Los campos no pueden estar vacíos</p>
+            {% endif %}
+
+            <button class="btn btn-success btn-block" type="submit">Guardar cambios</button>
+
+        </form>
+
         <section>
             <article>
                 <p class="h4 mb-4">Viajes realizados:</p>
@@ -34,8 +61,8 @@
                 {% endif%}
             </article>
         </section>
-        <a href="{% url 'delete' %}">Borrar cuenta</a>
     </div>
+
 </div>
 {% else %}
 <h2>Necesario registrarse.</h2>

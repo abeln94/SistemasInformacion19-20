@@ -4,7 +4,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<form method="post" action="#" class="contenedor_log">
+<form method="post" action="#" class="contenedor_log container col-md-6 mt-2 mb-2">
     {% csrf_token %}
     <input type="hidden" name="type" value="addTrip">
 
@@ -13,7 +13,6 @@
     <input type="date" name="date" placeholder="Fecha">
     <input type="text" name="start" placeholder="Inicio">
     <input type="text" name="end" placeholder="Fin">
-    <input type="number" name="points" placeholder="Puntos">
 
     <button type="submit">Añadir trip al usuario</button>
 
