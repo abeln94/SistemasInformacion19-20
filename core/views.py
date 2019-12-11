@@ -1,11 +1,13 @@
-import random
-
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import generic
 
 from core.maps import getDistance, TooManyRequests
 from core.models import Trip, CarType, User, Post
+
+DEFAULT_CAR_COST = 1
+
+DEFAULT_BUS_COST = 0.2
 
 
 # Create your views here.
@@ -31,10 +33,10 @@ def map(request):
             params['error'] = True
         else:
             try:
-                dist, source, dest = getDistance(params['source_form'], params['dest_form'])
-                params['costCar'] = dist * cartype.contaminationRate / int(request.POST.get('passengers'))
-                params['costBus'] = dist * random.uniform(0.1, 0.9)
-                params['percentDiff'] = params['costBus'] / params['costCar'] * 100
+                distCar, distBus, source, dest = getDistance(params['source_form'], params['dest_form'])
+                params['costCar'] = distCar * cartype.contaminationRate / int(request.POST.get('passengers'))
+                params['costBus'] = distBus * DEFAULT_BUS_COST
+                params['percentDiff'] = (params['costCar']-params['costBus']) / params['costCar'] * 100
                 params['source'] = source
                 params['dest'] = dest
             except TooManyRequests:
@@ -111,9 +113,9 @@ def api(request):
             start = request.POST.get('start')
             end = request.POST.get('end')
             try:
-                dist, source, dest = getDistance(start, end)
-                costCar = dist * 4 / 4  # default car
-                costBus = dist * random.uniform(0.1, 0.9)
+                distCar, distBus, source, dest = getDistance(start, end)
+                costCar = distCar * DEFAULT_CAR_COST
+                costBus = distBus * DEFAULT_BUS_COST
                 diff = costBus / costCar * 100
             except TooManyRequests:
                 diff = 5

@@ -43,11 +43,11 @@
         {% if error %}
         <h2>Campos vacíos</h2>
         {% elif toomanyrequests %}
-        <h2>Espera unos segundos, que la api no puede</h2>
+        <h2>La api no admite tantas peticiones, intentelo de nuevo pasados unos segundos</h2>
         {% elif costCar%}
         <h5>Coste en coche: {{costCar}} µg/m3</h5>
         <h5>Coste en autobús: {{costBus}} µg/m3</h5>
-        {% if percentDiff < 100 %}
+        {% if percentDiff > 0 %}
         <h5>¡Se ahorra un {{percentDiff}}% !</h5>
         {% endif %}
         {% endif %}
