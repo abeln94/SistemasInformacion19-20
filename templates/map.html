@@ -15,70 +15,72 @@
 
 {% block content %}
 
-<div class="container row">
-    <div class="col-lg-6 mt-2 mb-2 text-center border border-light p-5">
-        <div id="map" class="map map-home img-fluid mx-auto d-block" style="margin:auto;height:350px;width:425px"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mt-2 mb-2 text-center border border-light p-5">
+            <div id="map" class="map map-home img-fluid mx-auto d-block" style="margin:auto;height:350px;width:425px"></div>
 
-        <script>
-            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
-            var map = L.map('map').addLayer(osm);
-            if("{{costCar}}"==""){
-                map.setView(new L.LatLng(41.64505127477792, -0.9032447414148848), 12)
-            }else{
-                var origin = [{{source}}];
-                var destiny = [{{dest}}];
-                map.fitBounds([origin,destiny]);
-                L.marker(origin)
-                    .bindTooltip("Origen", { permanent: true, direction: 'right' })
-                    .addTo(map)
-                L.marker(destiny)
-                    .bindTooltip("Destino", { permanent: true, direction: 'right' })
-                    .addTo(map)
-            }
-        </script>
-        <br>
+            <script>
+                var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+                var map = L.map('map').addLayer(osm);
+                if("{{costCar}}"==""){
+                    map.setView(new L.LatLng(41.64505127477792, -0.9032447414148848), 12)
+                }else{
+                    var origin = [{{source}}];
+                    var destiny = [{{dest}}];
+                    map.fitBounds([origin,destiny]);
+                    L.marker(origin)
+                        .bindTooltip("Origen", { permanent: true, direction: 'right' })
+                        .addTo(map)
+                    L.marker(destiny)
+                        .bindTooltip("Destino", { permanent: true, direction: 'right' })
+                        .addTo(map)
+                }
+            </script>
+            <br>
 
-        {% if error %}
-        <h2>Campos vacíos</h2>
-        {% elif toomanyrequests %}
-        <h2>La api no admite tantas peticiones, intentelo de nuevo pasados unos segundos</h2>
-        {% elif costCar%}
-        <h5>Coste en coche: {{costCar}} µg/m3</h5>
-        <h5>Coste en autobús: {{costBus}} µg/m3</h5>
-        {% if percentDiff > 0 %}
-        <h5>¡Se ahorra un {{percentDiff}}% !</h5>
-        {% endif %}
-        {% endif %}
-    </div>
-    <div class="col-lg-6 mt-2 mb-2">
-        <form class="text-center border border-light p-5" method="post">
-            {% csrf_token %}
-            <p class="mb-4">Calculadora de rutas: Desde esta página puedes comprobar el impacto en el medioambiente de un trayecto en coche respecto al mismo en autobús. Introduce una dirección origen y destino, elige el tipo de coche que utilizas y el número de personas que viajan en él, y dale a calcular.</p>
+            {% if error %}
+            <h2>Campos vacíos</h2>
+            {% elif toomanyrequests %}
+            <h2>La api no admite tantas peticiones, intentelo de nuevo pasados unos segundos</h2>
+            {% elif costCar%}
+            <h5>Coste en coche: {{costCar}} µg/m3</h5>
+            <h5>Coste en autobús: {{costBus}} µg/m3</h5>
+            {% if percentDiff > 0 %}
+            <h5>¡Se ahorra un {{percentDiff}}% !</h5>
+            {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-lg-6 mt-2 mb-2">
+            <form class="text-center border border-light p-5" method="post">
+                {% csrf_token %}
+                <p class="mb-4">Calculadora de rutas: Desde esta página puedes comprobar el impacto en el medioambiente de un trayecto en coche respecto al mismo en autobús. Introduce una dirección origen y destino, elige el tipo de coche que utilizas y el número de personas que viajan en él, y dale a calcular.</p>
 
-            <p class="h4 mb-4">Origen</p>
-            <input class="form-control mb-4" type="text" id="source" name="source" placeholder="Localización origen" value="{{source_form}}">
+                <p class="h4 mb-4">Origen</p>
+                <input class="form-control mb-4" type="text" id="source" name="source" placeholder="Localización origen" value="{{source_form}}">
 
-            <p class="h4 mb-4">Destino</p>
-            <input class="form-control mb-4" type="text" id="dest" name="dest" placeholder="Localización destino" value="{{dest_form}}">
+                <p class="h4 mb-4">Destino</p>
+                <input class="form-control mb-4" type="text" id="dest" name="dest" placeholder="Localización destino" value="{{dest_form}}">
 
-            <p class="h4 mb-4">Transporte</p>
-            <div class="row text-left">
-                <p class="h6 mb-4 col-7">Tipo de coche</p>
-                <select class="col-4" id="carType" name="carType">
-                    {% for carType in carTypes %}
-                    <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.model }} (contaminación: {{ carType.contaminationRate }})</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="row text-left">
-                <p class="h6 mb-4 col-7">Pasajeros</p>
-                <input class="mb-4 col-4" type="number" name="passengers" value="{{ passengersUser }}">
-            </div>
+                <p class="h4 mb-4">Transporte</p>
+                <div class="row text-left">
+                    <p class="h6 mb-4 col-7">Tipo de coche</p>
+                    <select class="col-4" id="carType" name="carType">
+                        {% for carType in carTypes %}
+                        <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.model }} (contaminación: {{ carType.contaminationRate }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row text-left">
+                    <p class="h6 mb-4 col-7">Pasajeros</p>
+                    <input class="mb-4 col-4" type="number" name="passengers" value="{{ passengersUser }}">
+                </div>
 
-            <button class="btn btn-block btn-success" type="submit"> Calcular</button>
-        </form>
+                <button class="btn btn-block btn-success" type="submit"> Calcular</button>
+            </form>
+        </div>
     </div>
 </div>
 
