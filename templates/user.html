@@ -6,52 +6,50 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<div class="container row mt-2 mb-2">
-    <div class="col-md-6">
-        <img src="{% static 'images/surfer_astronaut.jpg' %}" alt="user photo" class="img-fluid mx-auto">
+<div class="container text-center mt-2 mb-2">
+    
+    <!-- Cabecera -->
+    <div class="row mt-2 mb-2">
+        <p class="col h2"> Mi cuenta </p>
+        <button class="col btn btn-success btn-lg ml-2 mr-2" onclick="location.href='{% url 'logout' %}'" type="button">Cerrar sesión</button>
     </div>
-    <div class="col-md-6 text-center border border-light p-5">
-        <div class="mb-4">
-            <p class="h4 mb-4">Administración</p>
-            <p>
-                <a href="{% url 'logout' %}">Desconectar</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="{% url 'delete' %}">Borrar cuenta</a>
-            </p>
+
+    <div class="row mt-2 mb-2">
+    <!-- Datos de usuario -->
+        <div class="col-lg-6 border border-success rounded">
+            <p class="h4 mb-4">Mis datos</p>
+            <form class="mb-4" method="post" action="#">
+                {% csrf_token %}
+                <div class="form-row mb-4">
+                    <div class="col">Nombre:</div>
+                    <input type="text" class="col form-control text-center" name="first_name" value="{{user.first_name}}">
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">Apellidos:</div>
+                    <input type="text" class="col form-control text-center" name="last_name" value="{{user.last_name}}">
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">Email:</div>
+                    <div class="col form-control-static">{{user.email}}</div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col">Tarjeta autobús:</div>
+                    <input type="text" class="col form-control text-center" name="cardId" value="{{user.cardId}}">
+                </div>
+
+                {% if error %}
+                <p>Los campos no pueden estar vacíos</p>
+                {% endif %}
+
+                <button class="btn btn-success btn-block" type="submit">Guardar cambios</button>
+
+            </form>
         </div>
 
-        <form class="mb-4" method="post" action="#">
-            {% csrf_token %}
-            <p class="h4 mb-4">Mis datos</p>
-            <div class="form-row mb-4">
-                <div class="col">Nombre:</div>
-                <input type="text" class="col form-control text-center" name="first_name" value="{{user.first_name}}">
-            </div>
-            <div class="form-row mb-4">
-                <div class="col">Apellidos:</div>
-                <input type="text" class="col form-control text-center" name="last_name" value="{{user.last_name}}">
-            </div>
-            <div class="form-row mb-4">
-                <div class="col">Email:</div>
-                <div class="col form-control-static">{{user.email}}</div>
-            </div>
-            <div class="form-row mb-4">
-                <div class="col">Tarjeta autobús:</div>
-                <input type="text" class="col form-control text-center" name="cardId" value="{{user.cardId}}">
-            </div>
-
-            {% if error %}
-            <p>Los campos no pueden estar vacíos</p>
-            {% endif %}
-
-            <button class="btn btn-success btn-block" type="submit">Guardar cambios</button>
-
-        </form>
-
-        <section>
-            <article>
-                <p class="h4 mb-4">Viajes realizados:</p>
-                <ul>
+        <!-- Información de los viajes del usuario -->
+        <div class="col-lg-6 border border-success rounded">
+            <p class="h4 mb-4">Viajes realizados:</p>
+            <ul>
                     {% for trip in trips %}
                     <li>El {{ trip.date }} viajaste de {{ trip.start }} a {{ trip.end }} y ganaste {{ trip.points }} puntos.</li>
                     {% endfor %}
@@ -59,10 +57,13 @@
                 {% if trips %}{% else %}
                 <p>No hay viajes registrados</p>
                 {% endif%}
-            </article>
-        </section>
-    </div>
+        </div>
 
+        <!-- Botón de borrado de cuenta -->
+        <div class="wd-50 ml-2 mr-2 mt-2 mb-2">
+            <button class="btn btn-outline-danger" onclick="location.href='{% url 'delete' %}'" type="button">Borrar cuenta</button>
+        </div>
+    </div>
 </div>
 {% else %}
 <h2>Necesario registrarse.</h2>
