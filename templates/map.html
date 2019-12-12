@@ -64,17 +64,17 @@
             <input class="form-control mb-4" type="text" id="dest" name="dest" placeholder="Localización destino" value="{{dest_form}}">
 
             <p class="h4 mb-4">Transporte</p>
-            <div class="row">
-                <p class="h6 mb-4 col-8">Tipo de coche</p>
-                <select class="col-3" id="carType" name="carType">
+            <div class="row text-left">
+                <p class="h6 mb-4 col-7">Tipo de coche</p>
+                <select class="col-4" id="carType" name="carType">
                     {% for carType in carTypes %}
                     <option value='{{carType.id}}' {% if carType == carUser %} selected="selected" {% endif %}>{{ carType.model }} (contaminación: {{ carType.contaminationRate }})</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="row">
-                <p class="h6 mb-4 col-8">Pasajeros</p>
-                <input class="mb-4 col-3" type="number" name="passengers" value="{{ passengersUser }}">
+            <div class="row text-left">
+                <p class="h6 mb-4 col-7">Pasajeros</p>
+                <input class="mb-4 col-4" type="number" name="passengers" value="{{ passengersUser }}">
             </div>
 
             <button class="btn btn-block btn-success" type="submit"> Calcular</button>
