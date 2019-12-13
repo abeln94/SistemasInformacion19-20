@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title> EcoRutas: Página principal </title>
+		<meta charset="UTF-8">
+		<meta name="description" content="EcoRutas"/>
+		<meta name="keywords" content="EcoRutas,Zaragoza,medio ambiente,ayuntamiento de Zaragoza,noticias,calculadora de rutas"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/x-icon" href="images/icono.ico">
+		 <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+
+		<!-- Iconos para Bootstrap 4 -->
+    	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	</head>	
+	<body>
+		<!-- Cabecera de la página -->
+	      <!-- Barra de navegación superior -->
+	    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	      <!-- Logo del ayuntamiento de Zaragoza (a la izquierda) -->
+	      <img src="images/logo-empresa.png" class="navbar-brand mr-auto img-fluid"  
+	        alt="logo del ayuntamiento de Zaragoza">
+	      <!-- Título de la página (en el centro) -->
+	      <a class="navbar-brand abs" href="index.html">
+	        EcoRutas
+	      </a>
+	      <!-- Icono de usuario (a la derecha) -->
+	      <a href="login.html" class="ml-auto nav-flex-icons nav-item avatar nav-link p-0">
+	        <img src="images/icon_user.png"  class="rounded-circle z-depth-0" 
+	          alt="icono de usuario" height="35">
+	      </a>
+	    </nav>
+	      <!-- Barra de navegación inferior -->
+	    <nav class="row">
+	      <input type="button" class="col btn btn-outline-success active" onclick="location.href='index.html'" value="Noticias">
+	      <input type="button" class="col btn btn-outline-success" onclick="location.href='mapa.html'" value="Calculadora">
+	    </nav>
+
+		<!-- Parte principal -->
+		<div class="container">
+			<section class="mt-2 mb-2">
+				<article class="row text-center border border-success p-5">
+					<img class="col-md-4 img-fluid" src="images/noticias/plantarArbol.jpg" alt="Imagen de campaña de plantación de árboles 2018">
+					<div class="col-md-8">
+						<h2> Campaña por la preservación de la naturaleza </h2>
+						<a class="float-left" href="#"> Autor </a>
+						<p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i>  2 days, 8 hours</p>
+					</div>
+					<p class="row d-none d-sm-block">
+							Este año nos proponemos en el ayuntamiento de Zaragoza colabolar con la preservación de la naturaleza en la ciudad. Por ello 
+							creemos interesante, si estás en edad de 12 a 17 años, que participes con nosotros en esta gran labor ciudadana de plantación 
+							de árboles en las inmediaciones del barrio de Picarral, entre los días 10 y 20 de diciembre, para que, en unos años, podamos 
+							volver y admirar nuestra obra. Además, Picarral es una de las zonas de mayor densidad industrial en la urbe. ¿A qué estás esperando? Únete, te esperamos
+					</p>
+				</article>
+				<article class="row text-center border border-success p-5">
+					<img class="col-md-4 img-fluid" src="images/noticias/contaminacion.jpg" alt="Imagen de concienciación para reducir contaminación en las ciudades">
+					<div class="col-md-8">	
+						<h2> Zaragoza, objetivo 0 contaminación </h2>
+						<a class="float-left" href="#"> Autor </a>
+						<p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i>  2 days, 8 hours</p>
+					</div>
+					<p class="row d-none d-sm-block">
+					Hoy en día los ciudadanos adquirimos más y más conciencia acerca de la importancia de preservar el entorno en el que vivimos. No obstante, parece que al vivir en la ciudad, eso se nos olvida, o no lo vemos como algo tan evidente como cuando vamos a pasar el fin de semana al monte. Sin embargo, nos afecta, y más de lo que creemos, ya que es en las ciudades donde mayor polución se acumula por metro cúbico. Por ese motivo, el ayuntamiento de Zaragoza con la colaboración de GreenPeace ha lanzado este año la propuesta "Zaragoza, objetivo 0 contaminación" en la que se pretende llegar en unos pocos años a ser una de las ciudades de España con mejor gestión de residuos y tratamiento de la polución ambiental. Estad atentos, ¡pronto surgirán campañas para todas las edades en las que podréis participar!
+					</p>
+					
+				</article>
+				<article class="row text-center border border-success p-5">
+					<img class="col-md-4 img-fluid" src="images/noticias/coche.jpeg" alt="Imagen de un coche en la que se cuestiona las emisiones contaminantes que emite">
+					<div class="col-md-8">
+						<h2> ¿Cuánto contamina mi coche? </h2>
+						<a class="float-left" href="#"> Autor </a>
+						<p class="float-right"><i class="fa fa-calendar" aria-hidden="true"></i>  2 days, 8 hours</p>
+					</div>
+					<p class="row d-none d-sm-block">
+					Estamos de enhorabuena, y es que nuestra calculadora de rutas es todo un éxito. SIn embargo, muchos de vosotros nos preguntáis cómo puede uno saber la tasa de polución de su coche. SI bien estamos trabajando en una base de datos con la que podréis obviar poner ese dato por vuestra cuenta, ya que os daremos una lista de modelos de cohe, hasta entonces os dejamos aquí unos trucos que os pueden ayudar: 
+					<ul class="d-none d-sm-block">
+						<li>Google es vuestro amigo, lo sabe todo de todos (a veces incluso demasiado)</li>
+						<li>El manual de tu guantera es un buen aliado</li>
+						<li>Pásate por el concesionario...de paso quizá veas algún coche eléctrico interesante</li>
+					</ul>
+					</p>
+				</article>
+			</section>
+		</div>
+		<!-- Pie de página -->
+	    <footer class="page-footer bg-dark">
+	      <!-- Fila de contenido principal -->
+	      <div class="row">
+	        <div class="col-4 mr-auto mt-2">
+	          <a href="https://www.zaragoza.es/sedeelectronica/">
+	            <img class="img-fluid d-block mx-auto" src="images/ayuntamiento.png" alt="Ayuntamiento de Zaragoza">
+	          </a>
+	          <p class="d-none d-sm-block text-light text-center">Web del ayuntamiento de Zaragoza</p>
+	        </div>
+	        <p class="col-4 d-none d-sm-block text-light text-center mt-2">Desarrollado por EcoTeam</p>
+	        <div class="col-4 ml-auto mt-2">
+	        	<span class="border border-light rounded">
+		          <i class="fas fa-envelope text-light"></i>
+		          <a class="text-light" href="contacto.html">Contacto</a>
+		        </span>
+	        </div>
+	      </div>
+	      <!-- Copyright -->
+	      <div class="footer-copyright py-3 text-center text-light">
+	         © 2019 Copyright: <a href="https://choosealicense.com/licenses/mit/"> Mit License </a>
+	      </div>
+	    </footer>
+	</body>
+</html>
