@@ -45,10 +45,7 @@ public class IndexerAndSearcher {
 
     private IndexWriter index;
 
-    private int n;
-
     public IndexerAndSearcher() {
-        n = 0;
     }
 
     /**
@@ -57,27 +54,27 @@ public class IndexerAndSearcher {
      * @param path ruta del fichero a indexar
      * @throws IOException
      */
-    public void addFileToIndex(String path)
-            throws IOException {
-        InputStream inputStream = new FileInputStream(path);
-        BufferedReader inputStreamReader = new BufferedReader(
-                new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+    public void addFileToIndex(String path) {
+        try {
+            BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 
-        Document doc = new Document();
-        doc.add(new TextField("contenido", inputStreamReader));
-        doc.add(new StringField("path", path, Field.Store.YES));
-        index.addDocument(doc);
-        n++;
+            Document doc = new Document();
+            doc.add(new TextField("contenido", inputStreamReader));
+            doc.add(new StringField("path", path, Field.Store.YES));
+            index.addDocument(doc);
+            System.out.println("El fichero " + path + " se ha añadido al índice.");
+        } catch (FileNotFoundException e) {
+            System.out.println("El fichero " + path + " no se ha podido encontrar.");
+        } catch (IOException e) {
+            System.out.println("El fichero " + path + " no se ha podido añadir al índice.");
+        }
     }
 
     public void addDirectory(String directory) throws IOException {
-        Files.find(Paths.get(directory), 999, (p, bfa) -> bfa.isRegularFile()).forEach(path -> {
-            try {
-                addFileToIndex(path.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        Files.find(Paths.get(directory), 999,
+                (p, bfa) -> bfa.isRegularFile())
+                .forEach(path -> addFileToIndex(path.toString())
+                );
     }
 
     public void useSimpleAnalizer() {
@@ -105,17 +102,15 @@ public class IndexerAndSearcher {
      * @return un índice (Directory) en memoria, con los índices de los ficheros
      * @throws IOException
      */
-    public void createIndex() throws IOException {
-        initializeIndex(new MMapDirectory(Paths.get(INDEXDIR)));
-    }
-
-    public void useExistingIndex() throws IOException {
-        initializeIndex(MMapDirectory.open(Paths.get(INDEXDIR)));
-    }
-
-    public void initializeIndex(Directory directory) throws IOException {
+    public void initializeIndex(boolean keepExisting) throws IOException {
+        MMapDirectory directory = new MMapDirectory(Paths.get(INDEXDIR));
         IndexWriterConfig configuracionIndice = new IndexWriterConfig(analyzer);
         index = new IndexWriter(directory, configuracionIndice);
+        if (!keepExisting) index.deleteAll();
+    }
+
+    public void close() throws IOException {
+        index.close();
     }
 
 
@@ -127,6 +122,11 @@ public class IndexerAndSearcher {
      */
     public void search(String queryAsString) throws IOException {
 
+        if(index.numDocs() == 0){
+            System.out.println("No hay ficheros en el índice, no se puede buscar");
+            return;
+        }
+
         DirectoryReader directoryReader = DirectoryReader.open(index);
         IndexSearcher buscador = new IndexSearcher(directoryReader);
 
@@ -135,11 +135,10 @@ public class IndexerAndSearcher {
         try {
 
             query = queryParser.parse(queryAsString);
-
-            TopDocs resultado = buscador.search(query, n);
+            TopDocs resultado = buscador.search(query, index.numDocs());
             ScoreDoc[] hits = resultado.scoreDocs;
 
-            System.out.println("\nBuscando " + query + ": Encontrados " + hits.length + " hits.");
+            System.out.println("\nBuscando " + queryAsString + ": Encontrados " + hits.length + " hits.");
             int i = 0;
             for (ScoreDoc hit : hits) {
                 int docId = hit.doc;
@@ -153,39 +152,45 @@ public class IndexerAndSearcher {
         }
     }
 
-//    /**
-//     * Programa principal de prueba. Rellena las colecciones "ficheros" y "queries"
-//     *
-//     * @param args
-//     * @throws IOException
-//     */
-//    public static void main(String[] args) throws IOException {
-//        // Creamos el idexador / buscador
-//        IndexerAndSearcher searcher = new IndexerAndSearcher();
-//
-//        // Analizer
-////        searcher.useStandarAnalyzer();
-//        searcher.useSpanishAnalizer();
-//
-//        // index
-//        searcher.createIndex();
-////        searcher.addFileToIndex("./res/ficheros/uno.txt");
-////        searcher.addFileToIndex("./res/ficheros/dos.txt");
-////        searcher.addFileToIndex("./res/ficheros/tres.txt");
-////        searcher.addFileToIndex("./res/ficheros/cuatro.txt");
-//        searcher.addDirectory("./res/ficheros");
-//
-//        // search
+    //----------------------------------------------------------------------
+
+    /**
+     * Programa principal de prueba. Rellena las colecciones "ficheros" y "queries"
+     *
+     * @throws IOException
+     */
+    public static void example() throws IOException {
+        // Creamos el idexador / buscador
+        IndexerAndSearcher searcher = new IndexerAndSearcher();
+
+        // Analizer
+//        searcher.useSimpleAnalizer();
+//        searcher.useStandarAnalyzer();
+        searcher.useSpanishAnalizer();
+
+        // index
+        searcher.initializeIndex(false);
+//        searcher.addFileToIndex("./res/ficheros/uno.txt");
+//        searcher.addFileToIndex("./res/ficheros/dos.txt");
+//        searcher.addFileToIndex("./res/ficheros/tres.txt");
+//        searcher.addFileToIndex("./res/ficheros/cuatro.txt");
+        searcher.addDirectory("./res/ficheros");
+
+        // search
 //        searcher.search("Contaminación");
-//        searcher.search("contaminacion");
-//        searcher.search("cambio climatico");
-//        searcher.search("cambio climático");
+        searcher.search("contaminacion");
+        searcher.search("contaminación");
+        searcher.search("cambio climatico");
+        searcher.search("cambio climático");
 //        searcher.search("cambio");
 //        searcher.search("climatico");
-//        searcher.search("por");
-//        searcher.search("aeropuerto");
-//
-//    }
+        searcher.search("por");
+        searcher.search("aeropuerto");
+
+        searcher.close();
+
+        System.out.println("-------------------------------------------------------");
+    }
 
 }
 
