@@ -1,30 +1,28 @@
 package sistemasinformacion.practica5;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.SimpleAnalyzer;
-
-import org.apache.lucene.search.*;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.MMapDirectory;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
-
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.MMapDirectory;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.nio.file.Paths;
+import java.security.InvalidParameterException;
 
 
 /**
@@ -34,16 +32,53 @@ import java.nio.file.Paths;
  */
 public class IndexerAndSearcher {
 
+    enum AnalyzerType {
+        Simple,
+        Standard,
+        Spanish
+    }
+
     public static final String STOPWORDS = "./res/stopwords.txt";
     private final static String INDEXDIR = "./res/indice";
 
-
-    /**
-     * Analizar utilizado por el indexador / buscador
-     */
-    private Analyzer analyzer;
-
     private IndexWriter index;
+
+    public IndexerAndSearcher(AnalyzerType type, boolean keepIndex) throws IOException {
+        Analyzer analyzer;
+        switch (type) {
+            case Simple:
+                // Use SimpleAnalyzer
+                analyzer = new SimpleAnalyzer();
+                break;
+            case Standard:
+                // Use StandardAnalizer
+                try {
+                    FileReader reader = new FileReader(STOPWORDS);
+                    analyzer = new StandardAnalyzer(reader);
+                } catch (Exception e) {
+                    System.out.println("Error leyendo fichero de Stop Words. Usando valor por defecto");
+                    analyzer = new StandardAnalyzer();
+                }
+                break;
+            case Spanish:
+                // Use SpanishAnalyzer
+                analyzer = new SpanishAnalyzer();
+                break;
+            default:
+                throw new InvalidParameterException("Unknown analyzer type: " + type);
+        }
+
+        // Initialize index
+        MMapDirectory directory = new MMapDirectory(Paths.get(INDEXDIR));
+        IndexWriterConfig configuracionIndice = new IndexWriterConfig(analyzer);
+        index = new IndexWriter(directory, configuracionIndice);
+        if (keepIndex) {
+            System.out.println("Índice cargado con " + index.numDocs() + " fichero" + (index.numDocs() == 1 ? "" : "s") + ".");
+        } else {
+            System.out.println("Índice nuevo creado.");
+            index.deleteAll();
+        }
+    }
 
     /**
      * Añade un fichero al índice
@@ -80,52 +115,14 @@ public class IndexerAndSearcher {
     }
 
     /**
-     * Utiliza el analizador simple
+     * Guarda los cambios en el índice.
      */
-    public void useSimpleAnalizer() {
-        analyzer = new SimpleAnalyzer();
+    public void commit() throws IOException {
+        index.commit();
     }
 
     /**
-     * Utiliza el analizador estandar
-     */
-    public void useStandarAnalyzer() {
-        try {
-            FileReader reader = new FileReader(STOPWORDS);
-            analyzer = new StandardAnalyzer(reader);
-        } catch (Exception e) {
-            System.out.println("Error leyendo fichero de Stop Words. Usando valor por defecto");
-            analyzer = new StandardAnalyzer();
-        }
-    }
-
-    /**
-     * Utiliza el analizador español
-     */
-    public void useSpanishAnalizer() {
-        analyzer = new SpanishAnalyzer();
-    }
-
-
-    /**
-     * Inicializa el índice
-     *
-     * @param keepExisting si false y ya existía un índice, lo borra
-     */
-    public void initializeIndex(boolean keepExisting) throws IOException {
-        MMapDirectory directory = new MMapDirectory(Paths.get(INDEXDIR));
-        IndexWriterConfig configuracionIndice = new IndexWriterConfig(analyzer);
-        index = new IndexWriter(directory, configuracionIndice);
-        if (keepExisting) {
-            System.out.println("Índice cargado con " + index.numDocs() + " fichero" + (index.numDocs() == 1 ? "" : "s") + ".");
-        } else {
-            System.out.println("Índice nuevo creado.");
-            index.deleteAll();
-        }
-    }
-
-    /**
-     * Cierra el índice, guardando los cambios.
+     * Cierra el índice.
      *
      * @throws IOException
      */
@@ -150,7 +147,7 @@ public class IndexerAndSearcher {
         DirectoryReader directoryReader = DirectoryReader.open(index);
         IndexSearcher buscador = new IndexSearcher(directoryReader);
 
-        QueryParser queryParser = new QueryParser("contenido", analyzer);
+        QueryParser queryParser = new QueryParser("contenido", index.getAnalyzer());
         Query query;
         try {
 
@@ -180,15 +177,19 @@ public class IndexerAndSearcher {
      */
     public static void example() throws IOException {
         // Creamos el idexador / buscador
-        IndexerAndSearcher searcher = new IndexerAndSearcher();
+        IndexerAndSearcher searcher = new IndexerAndSearcher(
 
-        // Analizer
-//        searcher.useSimpleAnalizer();
-//        searcher.useStandarAnalyzer();
-        searcher.useSpanishAnalizer();
+                // Analizador:
+//                AnalyzerType.Simple,
+//                AnalyzerType.Standard,
+                AnalyzerType.Spanish,
 
-        // index
-        searcher.initializeIndex(false);
+                // index
+//                true
+                false
+        );
+
+        // files
 //        searcher.addFileToIndex("./res/ficheros/uno.txt");
 //        searcher.addFileToIndex("./res/ficheros/dos.txt");
 //        searcher.addFileToIndex("./res/ficheros/tres.txt");

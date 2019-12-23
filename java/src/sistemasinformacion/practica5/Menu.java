@@ -8,9 +8,7 @@ public class Menu {
     private IndexerAndSearcher indSear;
 
     void showMenu() throws IOException {
-        indSear = new IndexerAndSearcher();
-        indSear.useSpanishAnalizer();
-        indSear.initializeIndex(true);
+        indSear = new IndexerAndSearcher(IndexerAndSearcher.AnalyzerType.Spanish, true);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -29,11 +27,13 @@ public class Menu {
                         System.out.println("Introduzca el directorio para indexar:");
                         printCurrentDir();
                         indSear.addDirectory(scanner.nextLine());
+                        indSear.commit();
                         break;
                     case "2":
                         System.out.println("Introduzca el fichero a indexar:");
                         printCurrentDir();
                         indSear.addFileToIndex(scanner.nextLine());
+                        indSear.commit();
                         break;
                     case "3":
                         System.out.println("Introduzca la secuencia a buscar:");
