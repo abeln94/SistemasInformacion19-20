@@ -45,14 +45,10 @@ public class IndexerAndSearcher {
 
     private IndexWriter index;
 
-    public IndexerAndSearcher() {
-    }
-
     /**
      * Añade un fichero al índice
      *
      * @param path ruta del fichero a indexar
-     * @throws IOException
      */
     public void addFileToIndex(String path) {
         try {
@@ -70,6 +66,12 @@ public class IndexerAndSearcher {
         }
     }
 
+    /**
+     * Añade todos los ficheros en el directorio recursivamente al índice
+     *
+     * @param directory directorio a añadir
+     * @throws IOException
+     */
     public void addDirectory(String directory) throws IOException {
         Files.find(Paths.get(directory), 999,
                 (p, bfa) -> bfa.isRegularFile())
@@ -77,10 +79,16 @@ public class IndexerAndSearcher {
                 );
     }
 
+    /**
+     * Utiliza el analizador simple
+     */
     public void useSimpleAnalizer() {
         analyzer = new SimpleAnalyzer();
     }
 
+    /**
+     * Utiliza el analizador estandar
+     */
     public void useStandarAnalyzer() {
         try {
             FileReader reader = new FileReader(STOPWORDS);
@@ -91,38 +99,50 @@ public class IndexerAndSearcher {
         }
     }
 
+    /**
+     * Utiliza el analizador español
+     */
     public void useSpanishAnalizer() {
         analyzer = new SpanishAnalyzer();
     }
 
 
     /**
-     * Indexa los ficheros incluidos en "ficherosAIndexar"
+     * Inicializa el índice
      *
-     * @return un índice (Directory) en memoria, con los índices de los ficheros
-     * @throws IOException
+     * @param keepExisting si false y ya existía un índice, lo borra
      */
     public void initializeIndex(boolean keepExisting) throws IOException {
         MMapDirectory directory = new MMapDirectory(Paths.get(INDEXDIR));
         IndexWriterConfig configuracionIndice = new IndexWriterConfig(analyzer);
         index = new IndexWriter(directory, configuracionIndice);
-        if (!keepExisting) index.deleteAll();
+        if (keepExisting) {
+            System.out.println("Índice cargado con " + index.numDocs() + " fichero" + (index.numDocs() == 1 ? "" : "s") + ".");
+        } else {
+            System.out.println("Índice nuevo creado.");
+            index.deleteAll();
+        }
     }
 
+    /**
+     * Cierra el índice, guardando los cambios.
+     *
+     * @throws IOException
+     */
     public void close() throws IOException {
         index.close();
     }
 
 
     /**
-     * Busca la palabra indicada en queryAsString en el directorioDelIndice.
+     * Busca una palabra
      *
-     * @param queryAsString
+     * @param queryAsString palabra a buscar
      * @throws IOException
      */
     public void search(String queryAsString) throws IOException {
 
-        if(index.numDocs() == 0){
+        if (index.numDocs() == 0) {
             System.out.println("No hay ficheros en el índice, no se puede buscar");
             return;
         }
@@ -138,7 +158,8 @@ public class IndexerAndSearcher {
             TopDocs resultado = buscador.search(query, index.numDocs());
             ScoreDoc[] hits = resultado.scoreDocs;
 
-            System.out.println("\nBuscando " + queryAsString + ": Encontrados " + hits.length + " hits.");
+            String _s = hits.length == 1 ? "" : "s";
+            System.out.println("\nBuscando " + queryAsString + ": Encontrado" + _s + " " + hits.length + " hit" + _s + ".");
             int i = 0;
             for (ScoreDoc hit : hits) {
                 int docId = hit.doc;
@@ -155,9 +176,7 @@ public class IndexerAndSearcher {
     //----------------------------------------------------------------------
 
     /**
-     * Programa principal de prueba. Rellena las colecciones "ficheros" y "queries"
-     *
-     * @throws IOException
+     * Programa principal de prueba.
      */
     public static void example() throws IOException {
         // Creamos el idexador / buscador
